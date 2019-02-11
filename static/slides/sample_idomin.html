@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bringing Interactivity to Classic Clinical Plots with Highcharts and R</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Iaroslav Domin" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+    <script src="libs/jquery-1.11.1/jquery.min.js"></script>
+    <script src="libs/proj4js-2.3.15/proj4.js"></script>
+    <link href="libs/highcharts-5.0.6/css/motion.css" rel="stylesheet" />
+    <script src="libs/highcharts-5.0.6/highstock.js"></script>
+    <script src="libs/highcharts-5.0.6/highcharts-3d.js"></script>
+    <script src="libs/highcharts-5.0.6/highcharts-more.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/annotations.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/broken-axis.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/data.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/drilldown.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/exporting.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/funnel.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/heatmap.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/map.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/no-data-to-display.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/offline-exporting.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/solid-gauge.js"></script>
+    <script src="libs/highcharts-5.0.6/modules/treemap.js"></script>
+    <script src="libs/highcharts-5.0.6/plugins/annotations.js"></script>
+    <script src="libs/highcharts-5.0.6/plugins/draggable-legend.js"></script>
+    <script src="libs/highcharts-5.0.6/plugins/draggable-points.js"></script>
+    <script src="libs/highcharts-5.0.6/plugins/export-csv.js"></script>
+    <script src="libs/highcharts-5.0.6/plugins/grouped-categories.js"></script>
+    <script src="libs/highcharts-5.0.6/plugins/motion.js"></script>
+    <script src="libs/highcharts-5.0.6/plugins/pattern-fill-v2.js"></script>
+    <script src="libs/highcharts-5.0.6/plugins/tooltip-delay.js"></script>
+    <script src="libs/highcharts-5.0.6/custom/reset.js"></script>
+    <script src="libs/highcharts-5.0.6/custom/symbols-extra.js"></script>
+    <script src="libs/highcharts-5.0.6/custom/text-symbols.js"></script>
+    <link href="libs/fontawesome-4.5.0/font-awesome.min.css" rel="stylesheet" />
+    <link href="libs/htmlwdgtgrid-1/htmlwdgtgrid.css" rel="stylesheet" />
+    <script src="libs/highchart-binding-0.5.0/highchart.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+name: title
+class: title-slide
+background-image: url(pics/templ_title.png)
+background-position: 50% 100%
+background-size: 100% 35%
+
+&lt;style&gt;
+.remark-slide-number {
+  margin-left: -60px !important;
+  margin-right: auto !important;
+}
+&lt;/style&gt;
+
+&lt;hr style="margin: 150px 0px 0px 0px;"&gt;
+
+# Bringing Interactivity to Classic Clinical Plots with &lt;span style='color:#5f976c'&gt;Highcharts&lt;/span&gt; and &lt;span style='color:#1f65cc'&gt;R&lt;/span&gt;
+
+## Iaroslav Domin      
+
+&lt;img src="pics/templ_title_text.png" style="position: absolute; bottom: 3%; width: 85%"&gt;
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Hoffmann-La_Roche_logo.svg/1920px-Hoffmann-La_Roche_logo.svg.png" style="position: fixed; top: 2.8%; right: 1.9%" width="65"&gt;
+
+---
+background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Hoffmann-La_Roche_logo.svg/1920px-Hoffmann-La_Roche_logo.svg.png)
+background-size: 65px
+background-position: 98% 3%
+name: layout
+layout: true
+
+
+&lt;img src="pics/templ_watermark.png" style="position: fixed; bottom: 0%; right: 0%" width="120"&gt;
+---
+
+# Shiny + static plots
+
+--
+
+### What's wrong with this combination?
+
+--
+
+* static plot need to be rebuilt each time user interacts with it
+
+--
+
+* limited possibilities
+
+---
+
+
+
+
+```r
+hchart(df, "line", hcaes(x, y, group = arm))
+```
+
+<div id="htmlwidget-1cb79fe822ab80f17e4d" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1cb79fe822ab80f17e4d">{"x":{"hc_opts":{"title":{"text":null},"yAxis":{"title":{"text":"y"},"type":"linear"},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0,"showInLegend":true,"marker":{"enabled":false}},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25},"scatter":{"marker":{"symbol":"circle"}}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10},"series":[{"name":"A","data":[{"arm":"A","x":1,"y":-1.04414457474605},{"arm":"A","x":2,"y":-1.94504570352379},{"arm":"A","x":3,"y":-2.41918321034516},{"arm":"A","x":4,"y":-2.95239943228141},{"arm":"A","x":5,"y":-3.51514394927504},{"arm":"A","x":6,"y":-3.1322896012255},{"arm":"A","x":7,"y":-3.95132265942193},{"arm":"A","x":8,"y":-3.62173655026338},{"arm":"A","x":9,"y":-3.41186223644472},{"arm":"A","x":10,"y":-2.91005325439554},{"arm":"A","x":11,"y":-3.42009286294061},{"arm":"A","x":12,"y":-2.63335472606309},{"arm":"A","x":13,"y":-3.10357470130376},{"arm":"A","x":14,"y":-5.08223838180045},{"arm":"A","x":15,"y":-5.50501598688916},{"arm":"A","x":16,"y":-4.81157454906428},{"arm":"A","x":17,"y":-5.40767429315068},{"arm":"A","x":18,"y":-4.14719703321179},{"arm":"A","x":19,"y":-2.24538989075386},{"arm":"A","x":20,"y":-3.54862771626986},{"arm":"A","x":21,"y":-3.67044366004598},{"arm":"A","x":22,"y":-2.91955079806026},{"arm":"A","x":23,"y":-4.07567942690672},{"arm":"A","x":24,"y":-4.78024089077363},{"arm":"A","x":25,"y":-5.01668915526706},{"arm":"A","x":26,"y":-5.33472075420478},{"arm":"A","x":27,"y":-4.03299147725426},{"arm":"A","x":28,"y":-3.37355536007147},{"arm":"A","x":29,"y":-5.06281537333775},{"arm":"A","x":30,"y":-4.03227291532625},{"arm":"A","x":31,"y":-4.58743644519053},{"arm":"A","x":32,"y":-5.41817861691348},{"arm":"A","x":33,"y":-6.08387270059488},{"arm":"A","x":34,"y":-7.88131014910498},{"arm":"A","x":35,"y":-6.34747123145472},{"arm":"A","x":36,"y":-7.39347873890362},{"arm":"A","x":37,"y":-6.00292277860631},{"arm":"A","x":38,"y":-5.14885827032691},{"arm":"A","x":39,"y":-5.52174211655234},{"arm":"A","x":40,"y":-5.91694793686215},{"arm":"A","x":41,"y":-7.02983535684903},{"arm":"A","x":42,"y":-8.4661901105706},{"arm":"A","x":43,"y":-7.76700105827621},{"arm":"A","x":44,"y":-8.34678607337053},{"arm":"A","x":45,"y":-7.3761023503758},{"arm":"A","x":46,"y":-7.07222069905297},{"arm":"A","x":47,"y":-7.00042357106491},{"arm":"A","x":48,"y":-7.18361500963077},{"arm":"A","x":49,"y":-6.68755845519317},{"arm":"A","x":50,"y":-7.18777432976783},{"arm":"A","x":51,"y":-5.05760392713094},{"arm":"A","x":52,"y":-5.12649928796672},{"arm":"A","x":53,"y":-6.33831045330081},{"arm":"A","x":54,"y":-6.10551747438218},{"arm":"A","x":55,"y":-6.41989328451399},{"arm":"A","x":56,"y":-5.46222406207716},{"arm":"A","x":57,"y":-5.39693110220055},{"arm":"A","x":58,"y":-4.89944949248073},{"arm":"A","x":59,"y":-4.10469672689006},{"arm":"A","x":60,"y":-5.2280631347993},{"arm":"A","x":61,"y":-3.42820183763787},{"arm":"A","x":62,"y":-3.70267200184601},{"arm":"A","x":63,"y":-5.21155348609963},{"arm":"A","x":64,"y":-4.37523795304771},{"arm":"A","x":65,"y":-3.6363917201118},{"arm":"A","x":66,"y":-4.91744880108977},{"arm":"A","x":67,"y":-4.21484727669791},{"arm":"A","x":68,"y":-3.70190035494442},{"arm":"A","x":69,"y":-2.66147788625065},{"arm":"A","x":70,"y":-2.91846624624432},{"arm":"A","x":71,"y":-2.03040704954832},{"arm":"A","x":72,"y":-0.619255296947},{"arm":"A","x":73,"y":-0.638696167352964},{"arm":"A","x":74,"y":0.610588249784271},{"arm":"A","x":75,"y":0.0291749548154319},{"arm":"A","x":76,"y":-0.39730405902866},{"arm":"A","x":77,"y":1.39856680611976},{"arm":"A","x":78,"y":0.48465875831204},{"arm":"A","x":79,"y":2.75213355630835},{"arm":"A","x":80,"y":2.89093619731226},{"arm":"A","x":81,"y":1.7813541155795},{"arm":"A","x":82,"y":2.28321899864098},{"arm":"A","x":83,"y":1.03913185815881},{"arm":"A","x":84,"y":0.500949398336638},{"arm":"A","x":85,"y":1.30792795549038},{"arm":"A","x":86,"y":0.96410184529142},{"arm":"A","x":87,"y":2.37837549928091},{"arm":"A","x":88,"y":3.47386112808342},{"arm":"A","x":89,"y":3.66693602959479},{"arm":"A","x":90,"y":3.12077228273339},{"arm":"A","x":91,"y":2.95986956497732},{"arm":"A","x":92,"y":3.719730477583},{"arm":"A","x":93,"y":3.91492347554375},{"arm":"A","x":94,"y":3.43369142730445},{"arm":"A","x":95,"y":2.60875086228028},{"arm":"A","x":96,"y":3.67860340687719},{"arm":"A","x":97,"y":5.16836164990735},{"arm":"A","x":98,"y":5.32619632216489},{"arm":"A","x":99,"y":4.47202762923843},{"arm":"A","x":100,"y":3.3463409480068}],"type":"line"},{"name":"B","data":[{"arm":"B","x":1,"y":-0.637062705999503},{"arm":"B","x":2,"y":-1.6908703553174},{"arm":"B","x":3,"y":-2.42813164448683},{"arm":"B","x":4,"y":-2.45732439566445},{"arm":"B","x":5,"y":-3.98910524853373},{"arm":"B","x":6,"y":-4.40291029057073},{"arm":"B","x":7,"y":-4.52775081058516},{"arm":"B","x":8,"y":-2.29694743212574},{"arm":"B","x":9,"y":-2.05060929031057},{"arm":"B","x":10,"y":-2.67790733035337},{"arm":"B","x":11,"y":-1.84542475634304},{"arm":"B","x":12,"y":-1.7857913066428},{"arm":"B","x":13,"y":-1.74014190567168},{"arm":"B","x":14,"y":-2.15045765969745},{"arm":"B","x":15,"y":-2.82407017424136},{"arm":"B","x":16,"y":-3.56419006905827},{"arm":"B","x":17,"y":-3.39778738911147},{"arm":"B","x":18,"y":-2.7088683783275},{"arm":"B","x":19,"y":-1.79664394071202},{"arm":"B","x":20,"y":-2.41466633199622},{"arm":"B","x":21,"y":-3.45032614558267},{"arm":"B","x":22,"y":-2.95910022903865},{"arm":"B","x":23,"y":-0.688907313822565},{"arm":"B","x":24,"y":0.19154613456149},{"arm":"B","x":25,"y":-1.34560996901151},{"arm":"B","x":26,"y":-1.47598644520049},{"arm":"B","x":27,"y":-1.50321721314751},{"arm":"B","x":28,"y":-1.56283334411029},{"arm":"B","x":29,"y":-3.38303475176982},{"arm":"B","x":30,"y":-3.34519560031812},{"arm":"B","x":31,"y":-2.25056053955536},{"arm":"B","x":32,"y":-3.89390469159876},{"arm":"B","x":33,"y":-4.22891457772276},{"arm":"B","x":34,"y":-3.42223669885336},{"arm":"B","x":35,"y":-4.99222257704019},{"arm":"B","x":36,"y":-5.04639893352136},{"arm":"B","x":37,"y":-4.97709581308992},{"arm":"B","x":38,"y":-4.25340402045954},{"arm":"B","x":39,"y":-3.58083751786475},{"arm":"B","x":40,"y":-4.38462457330054},{"arm":"B","x":41,"y":-4.29340431980811},{"arm":"B","x":42,"y":-4.51372778342381},{"arm":"B","x":43,"y":-5.99308360984462},{"arm":"B","x":44,"y":-6.19828432220827},{"arm":"B","x":45,"y":-6.10592881627683},{"arm":"B","x":46,"y":-5.50787994948996},{"arm":"B","x":47,"y":-6.35962891493774},{"arm":"B","x":48,"y":-6.06822885936271},{"arm":"B","x":49,"y":-7.30266304759459},{"arm":"B","x":50,"y":-7.40635898633203},{"arm":"B","x":51,"y":-8.48217893309957},{"arm":"B","x":52,"y":-8.39292606524944},{"arm":"B","x":53,"y":-9.54262836958506},{"arm":"B","x":54,"y":-8.46086072702505},{"arm":"B","x":55,"y":-8.56479484126487},{"arm":"B","x":56,"y":-8.74229283802961},{"arm":"B","x":57,"y":-9.38382035955645},{"arm":"B","x":58,"y":-9.66888537305429},{"arm":"B","x":59,"y":-8.86601822922601},{"arm":"B","x":60,"y":-7.97633566022798},{"arm":"B","x":61,"y":-7.21296702987171},{"arm":"B","x":62,"y":-7.41100343156818},{"arm":"B","x":63,"y":-7.29635342636857},{"arm":"B","x":64,"y":-7.11130977160829},{"arm":"B","x":65,"y":-5.73231684352525},{"arm":"B","x":66,"y":-4.62474821196571},{"arm":"B","x":67,"y":-5.69138146868322},{"arm":"B","x":68,"y":-4.18734384193379},{"arm":"B","x":69,"y":-2.65282654625689},{"arm":"B","x":70,"y":-3.17043798857061},{"arm":"B","x":71,"y":-3.29408201231989},{"arm":"B","x":72,"y":-2.52437337424693},{"arm":"B","x":73,"y":-2.59775060048278},{"arm":"B","x":74,"y":-2.47507239496566},{"arm":"B","x":75,"y":-2.83070036119184},{"arm":"B","x":76,"y":-0.450385411362565},{"arm":"B","x":77,"y":-0.47123896603826},{"arm":"B","x":78,"y":-1.49046609282399},{"arm":"B","x":79,"y":-3.42789851175306},{"arm":"B","x":80,"y":-4.51275163341263},{"arm":"B","x":81,"y":-3.85218168682979},{"arm":"B","x":82,"y":-2.8453761435701},{"arm":"B","x":83,"y":-3.07030610561345},{"arm":"B","x":84,"y":-3.19438083789078},{"arm":"B","x":85,"y":-2.98808204225747},{"arm":"B","x":86,"y":-3.64920331027947},{"arm":"B","x":87,"y":-2.31788440021382},{"arm":"B","x":88,"y":-0.851276977759961},{"arm":"B","x":89,"y":-0.120948321352072},{"arm":"B","x":90,"y":-0.0885694850108001},{"arm":"B","x":91,"y":-1.03198709487384},{"arm":"B","x":92,"y":-2.47865440777616},{"arm":"B","x":93,"y":-2.80053183744558},{"arm":"B","x":94,"y":-1.30051013936497},{"arm":"B","x":95,"y":-0.420552332524232},{"arm":"B","x":96,"y":0.102037575797208},{"arm":"B","x":97,"y":0.988481408724859},{"arm":"B","x":98,"y":2.67407921774247},{"arm":"B","x":99,"y":2.40330413982079},{"arm":"B","x":100,"y":3.26973877044194}],"type":"line"}],"xAxis":{"type":"linear","title":{"text":"x"},"categories":null}},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+
+---
+
+# Some code with highlighting
+
+
+```r
+highchart(
+    list(
+        series = list(
+            list(name = "A",
+*                data = c(2, 3, 1)),
+            list(name = "B",
+*                data = c(5, 0, 2))
+        )
+    )
+)
+```
+      
+---
+name: questions
+
+&lt;img src="pics/templ_questions.png" style="position: fixed; top:40%; left: 25%"&gt;
+
+---
+
+&lt;h1&gt;&lt;span style='color:#3d94d1; position: fixed; top: 40%; left: 15%'&gt;Doing now what patients need next &lt;/span&gt;&lt;/h1&gt;
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
