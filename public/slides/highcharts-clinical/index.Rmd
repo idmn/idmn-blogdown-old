@@ -1,0 +1,633 @@
+---
+title: "Bringing Interactivity to Classic Clinical Plots with <span style='color:#5f976c'>Highcharts</span> and <span style='color:#1f65cc'>R</span>"
+author: "Iaroslav Domin"
+output:
+  xaringan::moon_reader:
+    seal: false
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+
+---
+name: title
+
+```{r include=FALSE}
+library(forcats)
+library(tidyr)
+library(stringr)
+library(glue)
+```
+
+
+name: title
+class: title-slide
+background-image: url(pics/templ_title.png)
+background-position: 50% 100%
+background-size: 100% 35%
+
+<style>
+.remark-slide-number {
+  margin-left: -60px !important;
+  margin-right: auto !important;
+}
+</style>
+
+<hr style="margin: 150px 0px 0px 0px;">
+
+# Bringing Interactivity to Classic Clinical Plots with <span style='color:#5f976c'>Highcharts</span> and <span style='color:#1f65cc'>R</span>
+
+## Iaroslav Domin      
+
+<img src="pics/templ_title_text.png" style="position: absolute; bottom: 3%; width: 85%">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Hoffmann-La_Roche_logo.svg/1920px-Hoffmann-La_Roche_logo.svg.png" style="position: fixed; top: 2.8%; right: 1.9%" width="65">
+
+---
+background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Hoffmann-La_Roche_logo.svg/1920px-Hoffmann-La_Roche_logo.svg.png)
+background-size: 65px
+background-position: 98% 3%
+name: layout
+layout: true
+
+
+<img src="pics/templ_watermark.png" style="position: fixed; bottom: 0%; right: 0%" width="120">
+
+---
+name: agenda
+exclude: false
+
+# Agenda
+
+1. Interactive visualization in R  options
+2. Highcharts vs ggplot2
+3. Clinical graphs with Highcharts
+4. Helpful resources
+
+---
+name: gg-shiny
+exclude: false
+
+# ggplot2 + shiny
+
+### What's good?
+
+* easy to build
+
+--
+exclude: false
+
+### What's bad?
+
+* static plot is updated on each interaction
+* limited possibilities
+
+???
+(relatively) easy to build
+usually familiar
+will not get this feeling
+
+---
+name: fortunately
+exclude: false
+
+# Fortunately
+
+.pull-left[
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/724px-R_logo.svg.png" height="200">
+
+Good as an interface language
+]
+
+.pull-right[
+<div style="display:inline; position: relative; top: 27px;"><img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg"
+height="200">
+</div>
+<div style="position: relative; top: 40px">
+Wide variety of interactive datavis libraries
+</div>
+]
+
+
+???
+do dataviz - work a lot with data - that's why to use R
+
+---
+name: alter
+exclude: false
+name: plotly + bokeh
+
+# Popular libraries ported to R
+
+.pull-left[
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Plotly-logo-01-square.png/220px-Plotly-logo-01-square.png" height = 200>
+
+* written in JavaScript
+* free, paid only for additional tools
+* official R package from the developers 
+* versatile
+* can turn ggplot2 object into plotly 
+]
+
+.pull-right[
+<img src="http://pyviz.org/assets/bokeh.png" height = 200>
+
+* written in Python
+* open-source
+* fast
+* not so fancy
+]
+
+???
+
+[others](http://www.rebeccabarter.com/blog/2017-04-20-interactive/)
+
+---
+name: hc-intro
+exclude: false
+# Highcharts
+
+.pull-left[
+<img src="https://cdn.freebiesupply.com/logos/large/2x/highcharts-logo-svg-vector.svg" height = 300>
+]
+
+.pull-right[
+* written in javascript
+* probably the best looking
+* very different from ggplot2
+* but excellent documentation
+]
+--
+exclude: false
+
+```
+> library(highcharter)
+Highcharts (www.highcharts.com) is a Highsoft software product which is
+not free for commercial and Governmental use
+```
+
+???
+they did not pay me haha
+* free for casual use
+* need to pay to use in production
+* minimalistic, stylish
+* smooth animation
+* vast choice of vis types
+* I just like how it looks
+
+---
+name: gg-philosophy-1
+exclude: false
+
+# ggplot2 philosophy
+
+```{r message=FALSE, include=FALSE}
+library(dplyr)
+library(ggplot2)
+df <- iris %>% 
+  select(s_length = Sepal.Length, s_width = Sepal.Width, species = Species) #%>% 
+  #slice(c(1:5, 51:55))
+```
+
+<img src="pics/ggplot2_phil_1.png" height = 500>
+
+???
+we work with dataframes only
+rows are observations
+columns are feautes
+---
+name: gg-philosophy-2
+exclude: false
+
+# ggplot2 philosophy
+
+<img src="pics/ggplot2_phil_2.png" height = 500>
+
+---
+name: gg-philosophy-3
+exclude: false
+
+# ggplot2 philosophy
+
+```{r include=FALSE}
+knitr::opts_chunk$set(out.extra = 'style="position: absolute; bottom: 3%;"')
+```
+
+```{r fig.height=5.5}
+ggplot(df, aes(x = s_length, y = s_width, color = species))
+```
+
+---
+name: gg-philosophy-4
+exclude: false
+
+# ggplot2 philosophy
+
+
+```{r fig.height=5.5}
+ggplot(df, aes(x = s_length, y = s_width, color = species)) +
+  geom_point()
+```
+
+---
+name: gg-philosophy-5
+exclude: false
+
+# ggplot2 philosophy
+
+```{r message=FALSE, fig.height=5.5}
+ggplot(df, aes(x = s_length, y = s_width, color = species)) +
+  geom_point() + 
+  geom_smooth()
+```
+
+```{r include=FALSE}
+knitr::opts_chunk$set(out.extra = NULL)
+```
+
+---
+name: hc-philosophy
+exclude: false
+
+# Highcharts philosophy
+
+### Dataframes?
+--
+exclude: false
+
+### No, lists!
+
+```{js, size = 'tiny'}
+    series: [{
+        name: 'Installation',
+        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+    }, {
+        name: 'Manufacturing',
+        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+    }, {
+        name: 'Sales & Distribution',
+        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+    }, {
+        name: 'Project Development',
+        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+    }, {
+        name: 'Other',
+        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+```
+
+
+???
+historically - HC initially built for timeseries data
+nested lists is very natural thing for js as far as i can judge (at least more than for R)
+
+---
+name: simple
+exclude: false
+
+# Simple Example
+```{r include=FALSE}
+library(highcharter)
+```
+
+.pull-left[
+```{r eval=FALSE}
+highchart(
+  list(
+    series = list(
+      list(name = "A",          #<<
+           data = c(2, 3, 1)),  #<<
+      list(name = "B",
+           data = c(5, 0, 2))
+      )
+  )
+)
+```
+]
+
+.pull-right[
+```{r echo=FALSE}
+highchart(
+  list(
+    series = list(
+      list(name = "A",
+           data = c(2, 3, 1)),
+      list(name = "B",
+           data = c(5, 0, 2))
+      )
+  )
+) %>% 
+  hc_size(height = 400)
+```
+]
+
+???
+* 1-class citizen - series defined as lists
+* must contain data attribute and others
+* want to display multiple series - create list of list defining series
+* list containing all the series - is actually one of the attributes in the list of plot options
+
+* looks minimalistic and stylish
+* but already provides you with some options such as tooltips, click on label element to hide corresponding records
+* menu where you can save this plot
+
+---
+name: more-lists-1
+exclude: false
+
+# More Lists!
+
+```{r more-lists, eval=FALSE}
+highchart(
+    list(
+      series = list(
+        list(name = "A",
+          data = list(
+            2,
+            list(y = 3, #<<
+                 marker = list(radius = 20), #<<
+                 color = "red"), #<<                    
+            1)),
+        list(name = "B",
+           data = c(5, 0, 2))
+        )
+    )
+)
+```
+
+???
+(?) alter label option + add something interactive
+further I will show a more impressive example of what can be done with individual point options
+we
+---
+name: more-lists-2
+exclude: false
+
+# More Lists!
+```{r ref.label="more-lists", echo=FALSE}
+```
+???
+the idea is that you can pick arbitrary part of the plot
+and set whatever options you want
+
+---
+name: hc-helpers-1
+exclude: false
+
+# It's not that bad actually
+
+```{r not-that-bad, eval=FALSE}
+highchart() %>%
+  hc_add_series(data = c(2, 3, 1), name = "A") %>% 
+  hc_add_series(data = c(5, 0, 2), name = "B") %>% 
+  hc_chart(type = "column") %>%
+  hc_title(text = "Super Meaningful Chart")
+```
+
+---
+name: hc-helpers-2
+exclude: false
+
+# It's not that bad actually
+```{r ref.label="not-that-bad", echo=FALSE}
+```
+
+???
+the author couldnt have just left us with these scary lists.
+Added some helper functions. Would’ve been too cruel
+what's cool in letting people write js-like in R?
+
+---
+name: hchart-gg
+exclude: false
+
+# Hey, I can do some ggplot2!
+
+```{r include=FALSE}
+library(dplyr)
+library(highcharter)
+
+rand_walk <- function(n, mean = 0, sd = 1) {
+    cumsum(rnorm(n, mean, sd))
+}
+
+df_a <- data_frame(
+    arm = "A",
+    x = 1:100,
+    y = rand_walk(100)
+)
+
+df_b <- data_frame(
+    arm = "B",
+    x = 1:100,
+    y = rand_walk(100)
+)
+
+df <- bind_rows(df_a, df_b)
+```
+
+```{r eval=FALSE, include=TRUE}
+hchart(df, "line", hcaes(x = x, y = y, group = arm))
+```
+
+```{r echo=FALSE, eval=TRUE}
+hchart(df, "line", hcaes(x = x, y = y, group = arm)) %>% 
+  hc_size(height = 450)
+```
+
+???
+but to be honest it is quite limited
+due to huge difference in philosophies
+
+---
+name: surv-1
+exclude: false
+
+# Survival
+
+```{r survival, eval=TRUE}
+library(survival)
+library(dplyr)
+
+lung <- survival::lung
+lung <- mutate(lung, sex = ifelse(sex == 1, "Male", "Female"))
+fit <- survfit(Surv(time, status) ~ sex, data = lung) 
+fit
+```
+
+---
+name: surv-2
+exclude: false
+
+# Survival
+
+```{r echo=TRUE, eval=FALSE}
+hchart(fit, ranges = TRUE)
+```
+
+<img src = "pics/hc_surv.png" style = "width: 95%; height: auto;">
+
+---
+name: spider-gg
+exclude: false
+
+# Spiderplot (ggplot2)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=11}
+library(readr)
+library(ggplot2)
+
+sp_df <- read_csv("data/sp_df.csv")
+
+plot_type <- "usual"
+
+p_size <- c(usual = 1.1, faceted = .7)[[plot_type]]*3
+l_size <- c(usual = 1,   faceted = .7)[[plot_type]]*1.3
+PCHG_range = c(-100, 110)
+WEEK_range <- c(0, 56)
+
+
+sp_df %>% 
+    filter(CLASS == "SUMTGLES") %>% 
+    ggplot(aes(WEEK, PCHG, group = USUBJID, color = BOR)) +
+    scale_color_manual(
+        "Confirmed BOR\n(Per Protocol)",
+        values = c("CR" = "#00aedb", "PR" = "#00b159",
+                   "SD" = "#ffc425", "PD" = "#d11141",
+                   "NE" = "#545454"),
+        guide  = guide_legend(order = 1)
+    ) +
+    theme_light() +
+    # -30 to 20 region for PCHG
+    annotate("rect", xmin = 0, xmax = WEEK_range[[2]], ymin = -30, ymax = 20, alpha = .15) +
+    geom_hline(yintercept = 0, color = "gray75") +
+    geom_point(size = p_size, data = function(data){filter(data, CLASS == "SUMTGLES")}) +
+    geom_line(size = l_size, alpha = .7) +
+    #geom_line(data = filter(df, LINETYPE == "d"), aes(linetype = LINETYPE), size = l_size, alpha = .4) +
+    
+    scale_y_continuous(limits = PCHG_range,
+                       expand = c(0, 0),
+                       breaks = c(-100, -50, -30, 0, 20, 50, 100),
+                       minor_breaks = c(-30, 0, 20)) +
+    
+    scale_shape_manual(
+        element_blank(),
+        values = c("New Lesion" = 4, "Non-Trgt PD" = 1, "Trt Ongoing" = 62, "Loss of Exp." = 124),
+        guide  = guide_legend(order = 2, override.aes = list(size = 3))
+    ) +
+    theme(legend.justification = "top",
+          text = element_text(size = 15)) +
+    labs(y = "Change in target lesions from baseline [%]",
+         x = "Week completed after treatment start") +
+    theme(panel.grid = element_blank()) +
+    scale_x_continuous(limits = WEEK_range,
+                       breaks = round(seq(min(WEEK_range), max(WEEK_range), by = 4)),
+                       expand = c(0, 0))
+```
+
+
+
+---
+name: spider-hc
+exclude: false
+
+# Spiderplot (Highcharts)
+
+```{r echo=FALSE, message=FALSE}
+
+library(readr)
+library(purrr)
+library(dplyr)
+library(highcharter)
+sp_df <- read_csv("data/sp_df.csv")
+source("hc.R")
+hc_spi(sp_df)
+```
+
+???
+(!) fix lower y limit to -100
+zoomable - emphasize
+
+---
+name: waterfall
+exclude: false
+
+# Hidden Data
+
+```{r echo=FALSE}
+hc_wat(sp_df)
+```
+
+---
+name: help-purrr
+exclude: false
+
+# Help: purrr package
+
+<img src="pics/purrr_cs_2.png" style = "height: 85%; width: 85%;">
+
+---
+name: highcharter-lp
+exclude: false
+
+# Help: jkunst.com/highcharter
+
+<img src="pics/highcharter-lp.png" style = "height: 100%; width: 100%;">
+
+---
+name: help-doc
+exclude: false
+
+
+# Help: documentation + jsfiddle/codepen
+
+<img src="pics/jsfiddle.png" style = "height: 100%; width: 100%;">
+
+???
+some javascript knowledge will help but it isn't necessary
+
+---
+name: summary
+exclude: false
+
+
+# Summary
+
+* costs money for production use
+* high quality graphics
+* different from ggplot2
+* purrr package will be useful
+* check out [jkunst.com/highcharter](http://jkunst.com/highcharter/)
+* documentation is great
+
+
+???
+high quality graphics: animation also
+abt including: I just wrote the code and it appeared
+
+---
+name: questions
+
+<img src="pics/templ_questions.png" style="position: fixed; top:40%; left: 25%">
+
+---
+name: doing
+
+<h1><span style='color:#3d94d1; position: fixed; top: 40%; left: 15%'>Doing now what patients need next </span></h1>
+
+

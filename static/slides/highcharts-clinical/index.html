@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bringing Interactivity to Classic Clinical Plots with Highcharts and R</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Iaroslav Domin" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+    <script src="libs/jquery-1.11.1/jquery.min.js"></script>
+    <script src="libs/proj4js-2.3.15/proj4.js"></script>
+    <link href="libs/highcharts-7.0.1/css/motion.css" rel="stylesheet" />
+    <link href="libs/highcharts-7.0.1/css/htmlwdgtgrid.css" rel="stylesheet" />
+    <script src="libs/highcharts-7.0.1/highcharts.js"></script>
+    <script src="libs/highcharts-7.0.1/highcharts-3d.js"></script>
+    <script src="libs/highcharts-7.0.1/highcharts-more.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/stock.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/map.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/annotations.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/boost.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/data.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/drag-panes.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/drilldown.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/item-series.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/offline-exporting.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/overlapping-datalabels.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/exporting.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/export-data.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/funnel.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/heatmap.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/treemap.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/sankey.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/solid-gauge.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/streamgraph.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/sunburst.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/vector.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/wordcloud.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/xrange.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/tilemap.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/venn.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/gantt.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/timeline.js"></script>
+    <script src="libs/highcharts-7.0.1/modules/parallel-coordinates.js"></script>
+    <script src="libs/highcharts-7.0.1/plugins/grouped-categories.js"></script>
+    <script src="libs/highcharts-7.0.1/plugins/motion.js"></script>
+    <script src="libs/highcharts-7.0.1/plugins/multicolor_series.js"></script>
+    <script src="libs/highcharts-7.0.1/custom/reset.js"></script>
+    <script src="libs/highcharts-7.0.1/custom/symbols-extra.js"></script>
+    <script src="libs/highcharts-7.0.1/custom/text-symbols.js"></script>
+    <script src="libs/highchart-binding-0.7.0/highchart.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+
+name: title
+
+
+
+
+name: title
+class: title-slide
+background-image: url(pics/templ_title.png)
+background-position: 50% 100%
+background-size: 100% 35%
+
+&lt;style&gt;
+.remark-slide-number {
+  margin-left: -60px !important;
+  margin-right: auto !important;
+}
+&lt;/style&gt;
+
+&lt;hr style="margin: 150px 0px 0px 0px;"&gt;
+
+# Bringing Interactivity to Classic Clinical Plots with &lt;span style='color:#5f976c'&gt;Highcharts&lt;/span&gt; and &lt;span style='color:#1f65cc'&gt;R&lt;/span&gt;
+
+## Iaroslav Domin      
+
+&lt;img src="pics/templ_title_text.png" style="position: absolute; bottom: 3%; width: 85%"&gt;
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Hoffmann-La_Roche_logo.svg/1920px-Hoffmann-La_Roche_logo.svg.png" style="position: fixed; top: 2.8%; right: 1.9%" width="65"&gt;
+
+---
+background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Hoffmann-La_Roche_logo.svg/1920px-Hoffmann-La_Roche_logo.svg.png)
+background-size: 65px
+background-position: 98% 3%
+name: layout
+layout: true
+
+
+&lt;img src="pics/templ_watermark.png" style="position: fixed; bottom: 0%; right: 0%" width="120"&gt;
+
+---
+name: agenda
+exclude: false
+
+# Agenda
+
+1. Interactive visualization in R  options
+2. Highcharts vs ggplot2
+3. Clinical graphs with Highcharts
+4. Helpful resources
+
+---
+name: gg-shiny
+exclude: false
+
+# ggplot2 + shiny
+
+### What's good?
+
+* easy to build
+
+--
+exclude: false
+
+### What's bad?
+
+* static plot is updated on each interaction
+* limited possibilities
+
+???
+(relatively) easy to build
+usually familiar
+will not get this feeling
+
+---
+name: fortunately
+exclude: false
+
+# Fortunately
+
+.pull-left[
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/724px-R_logo.svg.png" height="200"&gt;
+
+Good as an interface language
+]
+
+.pull-right[
+&lt;div style="display:inline; position: relative; top: 27px;"&gt;&lt;img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg"
+height="200"&gt;
+&lt;/div&gt;
+&lt;div style="position: relative; top: 40px"&gt;
+Wide variety of interactive datavis libraries
+&lt;/div&gt;
+]
+
+
+???
+do dataviz - work a lot with data - that's why to use R
+
+---
+name: alter
+exclude: false
+name: plotly + bokeh
+
+# Popular libraries ported to R
+
+.pull-left[
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Plotly-logo-01-square.png/220px-Plotly-logo-01-square.png" height = 200&gt;
+
+* written in JavaScript
+* free, paid only for additional tools
+* official R package from the developers 
+* versatile
+* can turn ggplot2 object into plotly 
+]
+
+.pull-right[
+&lt;img src="http://pyviz.org/assets/bokeh.png" height = 200&gt;
+
+* written in Python
+* open-source
+* fast
+* not so fancy
+]
+
+???
+
+[others](http://www.rebeccabarter.com/blog/2017-04-20-interactive/)
+
+---
+name: hc-intro
+exclude: false
+# Highcharts
+
+.pull-left[
+&lt;img src="https://cdn.freebiesupply.com/logos/large/2x/highcharts-logo-svg-vector.svg" height = 300&gt;
+]
+
+.pull-right[
+* written in javascript
+* probably the best looking
+* very different from ggplot2
+* but excellent documentation
+]
+--
+exclude: false
+
+```
+&gt; library(highcharter)
+Highcharts (www.highcharts.com) is a Highsoft software product which is
+not free for commercial and Governmental use
+```
+
+???
+they did not pay me haha
+* free for casual use
+* need to pay to use in production
+* minimalistic, stylish
+* smooth animation
+* vast choice of vis types
+* I just like how it looks
+
+---
+name: gg-philosophy-1
+exclude: false
+
+# ggplot2 philosophy
+
+
+
+&lt;img src="pics/ggplot2_phil_1.png" height = 500&gt;
+
+???
+we work with dataframes only
+rows are observations
+columns are feautes
+---
+name: gg-philosophy-2
+exclude: false
+
+# ggplot2 philosophy
+
+&lt;img src="pics/ggplot2_phil_2.png" height = 500&gt;
+
+---
+name: gg-philosophy-3
+exclude: false
+
+# ggplot2 philosophy
+
+
+
+
+```r
+ggplot(df, aes(x = s_length, y = s_width, color = species))
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-4-1.png" style="position: absolute; bottom: 3%;" /&gt;
+
+---
+name: gg-philosophy-4
+exclude: false
+
+# ggplot2 philosophy
+
+
+
+```r
+ggplot(df, aes(x = s_length, y = s_width, color = species)) +
+  geom_point()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-5-1.png" style="position: absolute; bottom: 3%;" /&gt;
+
+---
+name: gg-philosophy-5
+exclude: false
+
+# ggplot2 philosophy
+
+
+```r
+ggplot(df, aes(x = s_length, y = s_width, color = species)) +
+  geom_point() + 
+  geom_smooth()
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" style="position: absolute; bottom: 3%;" /&gt;
+
+
+
+---
+name: hc-philosophy
+exclude: false
+
+# Highcharts philosophy
+
+### Dataframes?
+--
+exclude: false
+
+### No, lists!
+
+
+```js
+    series: [{
+        name: 'Installation',
+        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+    }, {
+        name: 'Manufacturing',
+        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+    }, {
+        name: 'Sales &amp; Distribution',
+        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+    }, {
+        name: 'Project Development',
+        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+    }, {
+        name: 'Other',
+        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+```
+
+
+&lt;script type="text/javascript"&gt;
+    series: [{
+        name: 'Installation',
+        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+    }, {
+        name: 'Manufacturing',
+        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+    }, {
+        name: 'Sales &amp; Distribution',
+        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+    }, {
+        name: 'Project Development',
+        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+    }, {
+        name: 'Other',
+        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+&lt;/script&gt;
+
+
+???
+historically - HC initially built for timeseries data
+nested lists is very natural thing for js as far as i can judge (at least more than for R)
+
+---
+name: simple
+exclude: false
+
+# Simple Example
+
+
+.pull-left[
+
+```r
+highchart(
+  list(
+    series = list(
+*     list(name = "A",
+*          data = c(2, 3, 1)),
+      list(name = "B",
+           data = c(5, 0, 2))
+      )
+  )
+)
+```
+]
+
+.pull-right[
+<div id="htmlwidget-65dcb639ea43c088682c" style="width:100%;height:400px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-65dcb639ea43c088682c">{"x":{"hc_opts":{"series":[{"name":"A","data":[2,3,1]},{"name":"B","data":[5,0,2]}]},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+]
+
+???
+* 1-class citizen - series defined as lists
+* must contain data attribute and others
+* want to display multiple series - create list of list defining series
+* list containing all the series - is actually one of the attributes in the list of plot options
+
+* looks minimalistic and stylish
+* but already provides you with some options such as tooltips, click on label element to hide corresponding records
+* menu where you can save this plot
+
+---
+name: more-lists-1
+exclude: false
+
+# More Lists!
+
+
+```r
+highchart(
+    list(
+      series = list(
+        list(name = "A",
+          data = list(
+            2,
+*           list(y = 3,
+*                marker = list(radius = 20),
+*                color = "red"),
+            1)),
+        list(name = "B",
+           data = c(5, 0, 2))
+        )
+    )
+)
+```
+
+???
+(?) alter label option + add something interactive
+further I will show a more impressive example of what can be done with individual point options
+we
+---
+name: more-lists-2
+exclude: false
+
+# More Lists!
+<div id="htmlwidget-b0b429303ea1e23d7e3f" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b0b429303ea1e23d7e3f">{"x":{"hc_opts":{"series":[{"name":"A","data":[2,{"y":3,"marker":{"radius":20},"color":"red"},1]},{"name":"B","data":[5,0,2]}]},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+???
+the idea is that you can pick arbitrary part of the plot
+and set whatever options you want
+
+---
+name: hc-helpers-1
+exclude: false
+
+# It's not that bad actually
+
+
+```r
+highchart() %&gt;%
+  hc_add_series(data = c(2, 3, 1), name = "A") %&gt;% 
+  hc_add_series(data = c(5, 0, 2), name = "B") %&gt;% 
+  hc_chart(type = "column") %&gt;%
+  hc_title(text = "Super Meaningful Chart")
+```
+
+---
+name: hc-helpers-2
+exclude: false
+
+# It's not that bad actually
+<div id="htmlwidget-b29ecf50b7a5c2fc661a" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b29ecf50b7a5c2fc661a">{"x":{"hc_opts":{"title":{"text":"Super Meaningful Chart"},"yAxis":{"title":{"text":null}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"series":[{"data":[2,3,1],"name":"A"},{"data":[5,0,2],"name":"B"}],"chart":{"type":"column"}},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+
+???
+the author couldnt have just left us with these scary lists.
+Added some helper functions. Would’ve been too cruel
+what's cool in letting people write js-like in R?
+
+---
+name: hchart-gg
+exclude: false
+
+# Hey, I can do some ggplot2!
+
+
+
+
+```r
+hchart(df, "line", hcaes(x = x, y = y, group = arm))
+```
+
+<div id="htmlwidget-b604a3299449afa95709" style="width:100%;height:450px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b604a3299449afa95709">{"x":{"hc_opts":{"title":{"text":null},"yAxis":{"title":{"text":"y"},"type":"linear"},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":true},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"name":"A","data":[{"arm":"A","x":1,"y":-0.258463801978961},{"arm":"A","x":2,"y":0.308689878311896},{"arm":"A","x":3,"y":1.68709182308291},{"arm":"A","x":4,"y":2.36641926508058},{"arm":"A","x":5,"y":2.13224021931401},{"arm":"A","x":6,"y":2.62242403530277},{"arm":"A","x":7,"y":1.6440342181445},{"arm":"A","x":8,"y":0.946804021914466},{"arm":"A","x":9,"y":2.15389774366708},{"arm":"A","x":10,"y":2.14234131328852},{"arm":"A","x":11,"y":2.65978162891751},{"arm":"A","x":12,"y":3.54575859057769},{"arm":"A","x":13,"y":4.12290942984227},{"arm":"A","x":14,"y":4.82295182241564},{"arm":"A","x":15,"y":4.57168007796762},{"arm":"A","x":16,"y":5.12853537030796},{"arm":"A","x":17,"y":5.48650107494611},{"arm":"A","x":18,"y":5.68637454798592},{"arm":"A","x":19,"y":6.16606297338865},{"arm":"A","x":20,"y":5.75709748655282},{"arm":"A","x":21,"y":3.96642397964809},{"arm":"A","x":22,"y":2.70957708984538},{"arm":"A","x":23,"y":3.00663500395556},{"arm":"A","x":24,"y":3.77184415809545},{"arm":"A","x":25,"y":5.21579544593549},{"arm":"A","x":26,"y":3.66814888082776},{"arm":"A","x":27,"y":3.74044439106205},{"arm":"A","x":28,"y":4.73604058264858},{"arm":"A","x":29,"y":5.8977727496396},{"arm":"A","x":30,"y":5.689850482165},{"arm":"A","x":31,"y":7.11883816136587},{"arm":"A","x":32,"y":5.57977288423636},{"arm":"A","x":33,"y":6.05756974004449},{"arm":"A","x":34,"y":6.70505455476865},{"arm":"A","x":35,"y":5.57388192641603},{"arm":"A","x":36,"y":3.5242304399238},{"arm":"A","x":37,"y":2.17069689433366},{"arm":"A","x":38,"y":1.93034267291659},{"arm":"A","x":39,"y":0.967900561553712},{"arm":"A","x":40,"y":1.582794123099},{"arm":"A","x":41,"y":2.88272292661105},{"arm":"A","x":42,"y":3.05218711996575},{"arm":"A","x":43,"y":4.32289741136057},{"arm":"A","x":44,"y":5.7069729993644},{"arm":"A","x":45,"y":5.96690446877263},{"arm":"A","x":46,"y":6.07616769866427},{"arm":"A","x":47,"y":6.91923629352079},{"arm":"A","x":48,"y":7.45166373863636},{"arm":"A","x":49,"y":6.30078598501312},{"arm":"A","x":50,"y":6.46708616037484},{"arm":"A","x":51,"y":6.67354851588566},{"arm":"A","x":52,"y":6.4204025627527},{"arm":"A","x":53,"y":7.94518464464601},{"arm":"A","x":54,"y":6.17242958299317},{"arm":"A","x":55,"y":5.28865350440047},{"arm":"A","x":56,"y":6.93855403045718},{"arm":"A","x":57,"y":4.68127702702948},{"arm":"A","x":58,"y":4.71582209091609},{"arm":"A","x":59,"y":4.93203785501811},{"arm":"A","x":60,"y":5.46897930047498},{"arm":"A","x":61,"y":6.1821120544855},{"arm":"A","x":62,"y":4.19989751837234},{"arm":"A","x":63,"y":3.50197953766927},{"arm":"A","x":64,"y":1.12682765851251},{"arm":"A","x":65,"y":0.992797420526821},{"arm":"A","x":66,"y":2.82107280635655},{"arm":"A","x":67,"y":0.835661124302263},{"arm":"A","x":68,"y":0.243421396513404},{"arm":"A","x":69,"y":-0.0770566367651874},{"arm":"A","x":70,"y":-0.118885891392989},{"arm":"A","x":71,"y":-0.986965040616735},{"arm":"A","x":72,"y":-2.67696442094313},{"arm":"A","x":73,"y":-2.78791379122453},{"arm":"A","x":74,"y":-2.46699212042545},{"arm":"A","x":75,"y":-2.78241275800725},{"arm":"A","x":76,"y":-3.452858162211},{"arm":"A","x":77,"y":-4.1735417213605},{"arm":"A","x":78,"y":-4.41036507049602},{"arm":"A","x":79,"y":-7.08558261973945},{"arm":"A","x":80,"y":-6.6854402501719},{"arm":"A","x":81,"y":-4.97480849696585},{"arm":"A","x":82,"y":-6.4241179978763},{"arm":"A","x":83,"y":-6.48392809237997},{"arm":"A","x":84,"y":-5.65577626985305},{"arm":"A","x":85,"y":-5.78017636579393},{"arm":"A","x":86,"y":-4.57116317529462},{"arm":"A","x":87,"y":-3.86831761984336},{"arm":"A","x":88,"y":-2.3980384496312},{"arm":"A","x":89,"y":-2.88433401909237},{"arm":"A","x":90,"y":-3.31165995494708},{"arm":"A","x":91,"y":-3.29804401517549},{"arm":"A","x":92,"y":-2.81389857274999},{"arm":"A","x":93,"y":-3.06183966708358},{"arm":"A","x":94,"y":-1.70008245400448},{"arm":"A","x":95,"y":-1.22702586550189},{"arm":"A","x":96,"y":-2.0766953195319},{"arm":"A","x":97,"y":-1.4275050380748},{"arm":"A","x":98,"y":-2.22126788385694},{"arm":"A","x":99,"y":-2.43001197214735},{"arm":"A","x":100,"y":-3.07589354733482}],"type":"line"},{"name":"B","data":[{"arm":"B","x":1,"y":0.993694944801736},{"arm":"B","x":2,"y":-1.16878571150461},{"arm":"B","x":3,"y":-1.58346077142152},{"arm":"B","x":4,"y":-1.50939990275971},{"arm":"B","x":5,"y":-0.681651530898884},{"arm":"B","x":6,"y":-1.02253235190179},{"arm":"B","x":7,"y":-1.45122305147205},{"arm":"B","x":8,"y":-0.0313298791243505},{"arm":"B","x":9,"y":1.05148822636253},{"arm":"B","x":10,"y":1.18417948266993},{"arm":"B","x":11,"y":1.4418965313196},{"arm":"B","x":12,"y":0.363007264354446},{"arm":"B","x":13,"y":1.08074145255133},{"arm":"B","x":14,"y":2.98221342475288},{"arm":"B","x":15,"y":4.9938748454193},{"arm":"B","x":16,"y":6.08903432215612},{"arm":"B","x":17,"y":5.39299543237767},{"arm":"B","x":18,"y":5.35437898639177},{"arm":"B","x":19,"y":5.60343751108316},{"arm":"B","x":20,"y":3.90139266564199},{"arm":"B","x":21,"y":2.9156133272006},{"arm":"B","x":22,"y":3.03936721460198},{"arm":"B","x":23,"y":3.29405014288356},{"arm":"B","x":24,"y":4.02542586578114},{"arm":"B","x":25,"y":2.72524429873351},{"arm":"B","x":26,"y":2.75082473194808},{"arm":"B","x":27,"y":2.94431891053129},{"arm":"B","x":28,"y":1.59241620027259},{"arm":"B","x":29,"y":-0.367357550504988},{"arm":"B","x":30,"y":1.34746870097298},{"arm":"B","x":31,"y":1.82024014930672},{"arm":"B","x":32,"y":2.02853149643212},{"arm":"B","x":33,"y":2.34227991522571},{"arm":"B","x":34,"y":4.3480060757229},{"arm":"B","x":35,"y":4.35645425338561},{"arm":"B","x":36,"y":4.9502146389909},{"arm":"B","x":37,"y":6.4854291315854},{"arm":"B","x":38,"y":5.55800218971003},{"arm":"B","x":39,"y":6.48720824759233},{"arm":"B","x":40,"y":6.64307497432069},{"arm":"B","x":41,"y":6.29346692065438},{"arm":"B","x":42,"y":6.14310215592839},{"arm":"B","x":43,"y":5.1497711984208},{"arm":"B","x":44,"y":5.67641120095147},{"arm":"B","x":45,"y":5.99341862037945},{"arm":"B","x":46,"y":5.81743875039534},{"arm":"B","x":47,"y":4.37124948698564},{"arm":"B","x":48,"y":4.93303342899297},{"arm":"B","x":49,"y":4.83261232189191},{"arm":"B","x":50,"y":6.22823488812362},{"arm":"B","x":51,"y":7.18299385065707},{"arm":"B","x":52,"y":7.73291912005864},{"arm":"B","x":53,"y":6.53802801117076},{"arm":"B","x":54,"y":5.07313733003158},{"arm":"B","x":55,"y":5.23744910346796},{"arm":"B","x":56,"y":4.3508035203787},{"arm":"B","x":57,"y":3.61866834913717},{"arm":"B","x":58,"y":2.5511746191239},{"arm":"B","x":59,"y":3.93242948476993},{"arm":"B","x":60,"y":4.32960880833199},{"arm":"B","x":61,"y":5.16663105363798},{"arm":"B","x":62,"y":4.5016654461855},{"arm":"B","x":63,"y":5.3157860141888},{"arm":"B","x":64,"y":3.76082516726777},{"arm":"B","x":65,"y":5.55595897405948},{"arm":"B","x":66,"y":3.55350637098589},{"arm":"B","x":67,"y":4.72413684138531},{"arm":"B","x":68,"y":5.78372385560904},{"arm":"B","x":69,"y":4.52226639340681},{"arm":"B","x":70,"y":3.77068491188682},{"arm":"B","x":71,"y":4.14786636923682},{"arm":"B","x":72,"y":1.87002458877365},{"arm":"B","x":73,"y":0.949744614346382},{"arm":"B","x":74,"y":1.1435480448191},{"arm":"B","x":75,"y":0.909527052019991},{"arm":"B","x":76,"y":0.145996398780463},{"arm":"B","x":77,"y":2.39510101581236},{"arm":"B","x":78,"y":3.94903189027452},{"arm":"B","x":79,"y":5.53777802557116},{"arm":"B","x":80,"y":7.59666887691623},{"arm":"B","x":81,"y":7.99681871529312},{"arm":"B","x":82,"y":9.69556423278841},{"arm":"B","x":83,"y":10.2262054770606},{"arm":"B","x":84,"y":10.4897069337374},{"arm":"B","x":85,"y":12.639679955814},{"arm":"B","x":86,"y":11.5876356149591},{"arm":"B","x":87,"y":11.3570953166129},{"arm":"B","x":88,"y":10.3995048206731},{"arm":"B","x":89,"y":9.22077285435822},{"arm":"B","x":90,"y":9.51787107627257},{"arm":"B","x":91,"y":7.63423827601374},{"arm":"B","x":92,"y":7.2982254145903},{"arm":"B","x":93,"y":8.36641983827552},{"arm":"B","x":94,"y":7.89746364878398},{"arm":"B","x":95,"y":5.96321490601589},{"arm":"B","x":96,"y":5.96955883285696},{"arm":"B","x":97,"y":5.76822710553126},{"arm":"B","x":98,"y":4.14924698796758},{"arm":"B","x":99,"y":4.98094203164829},{"arm":"B","x":100,"y":7.0296143694361}],"type":"line"}],"xAxis":{"type":"linear","title":{"text":"x"},"categories":null}},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+
+???
+but to be honest it is quite limited
+due to huge difference in philosophies
+
+---
+name: surv-1
+exclude: false
+
+# Survival
+
+
+```r
+library(survival)
+library(dplyr)
+
+lung &lt;- survival::lung
+lung &lt;- mutate(lung, sex = ifelse(sex == 1, "Male", "Female"))
+fit &lt;- survfit(Surv(time, status) ~ sex, data = lung) 
+fit
+```
+
+```
+## Call: survfit(formula = Surv(time, status) ~ sex, data = lung)
+## 
+##              n events median 0.95LCL 0.95UCL
+## sex=Female  90     53    426     348     550
+## sex=Male   138    112    270     212     310
+```
+
+---
+name: surv-2
+exclude: false
+
+# Survival
+
+
+```r
+hchart(fit, ranges = TRUE)
+```
+
+&lt;img src = "pics/hc_surv.png" style = "width: 95%; height: auto;"&gt;
+
+---
+name: spider-gg
+exclude: false
+
+# Spiderplot (ggplot2)
+
+![](index_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+
+
+
+---
+name: spider-hc
+exclude: false
+
+# Spiderplot (Highcharts)
+
+<div id="htmlwidget-09d71a5d9d79c7bdecbf" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-09d71a5d9d79c7bdecbf">{"x":{"hc_opts":{"title":{"text":null},"yAxis":{"title":{"text":"Change in target lesions from baseline [%]"},"plotBands":{"color":"#e5e5e5","from":-30,"to":20},"lineWidth":1,"tickWidth":1,"gridLineColor":"white"},"credits":{"enabled":false},"exporting":{"enabled":true},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"},"line":{"marker":{"symbol":"circle","radius":3},"dataLabels":{"allowOverlap":true}}},"chart":{"zoomType":"xy"},"xAxis":{"title":{"text":"Week completed after treatment start"}},"tooltip":{"formatter":"function(){\n                                  return ('<b>' + this.point.SUBJN + '<b/>' + '<br> Change: ' + (+this.y.toFixed(1)) + ' % <br>' +\n                                  ' Day: ' + Math.round(7*this.x))}"},"legend":{"title":{"text":"BOR"},"layout":"vertical","align":"right","verticalAlign":"top","y":50},"series":[{"USUBJID":"P-01","COLOR_GROUP":"PD","name":"PD","color":"#d11141","data":[{"x":0,"y":0,"SUBJN":"P-01","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":7.24806104786429,"y":25.4601556647842,"SUBJN":"P-01","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":12.3672634753898,"y":25.0469375836303,"SUBJN":"P-01","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":"","showInLegend":true},{"USUBJID":"P-04","COLOR_GROUP":"PD","name":"PD","color":"#d11141","data":[{"x":0,"y":0,"SUBJN":"P-04","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":9.46974352515671,"y":43.3181869279841,"SUBJN":"P-04","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":16.8443320827657,"y":63.4789453538999,"SUBJN":"P-04","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-06","COLOR_GROUP":"PD","name":"PD","color":"#d11141","data":[{"x":0,"y":0,"SUBJN":"P-06","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":15.9489923587499,"y":30.6533388819517,"SUBJN":"P-06","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-07","COLOR_GROUP":"PD","name":"PD","color":"#d11141","data":[{"x":0,"y":0,"SUBJN":"P-07","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":10.0774717616457,"y":120.798365416413,"SUBJN":"P-07","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-11","COLOR_GROUP":"PD","name":"PD","color":"#d11141","data":[{"x":0,"y":0,"SUBJN":"P-11","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":6.24478656905679,"y":-4.66471801878019,"SUBJN":"P-11","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-15","COLOR_GROUP":"PD","name":"PD","color":"#d11141","data":[{"x":0,"y":0,"SUBJN":"P-15","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":9.06184580991392,"y":50.5468435498701,"SUBJN":"P-15","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-16","COLOR_GROUP":"PD","name":"PD","color":"#d11141","data":[{"x":0,"y":0,"SUBJN":"P-16","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":5.81068948083422,"y":15.5449931406684,"SUBJN":"P-16","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-17","COLOR_GROUP":"PD","name":"PD","color":"#d11141","data":[{"x":0,"y":0,"SUBJN":"P-17","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":4.08748697665159,"y":25.5373261652282,"SUBJN":"P-17","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":8.0497065373978,"y":32.5411754576016,"SUBJN":"P-17","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-03","COLOR_GROUP":"PR","name":"PR","color":"#00b159","data":[{"x":0,"y":0,"SUBJN":"P-03","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":7.52058714068014,"y":-70.1612707368888,"SUBJN":"P-03","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":11.6699138261984,"y":-55.0810321513374,"SUBJN":"P-03","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":15.3598914121365,"y":-62.5403788281878,"SUBJN":"P-03","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":23.5219581418641,"y":-71.983500166567,"SUBJN":"P-03","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":31.6651649223771,"y":-76.001985034496,"SUBJN":"P-03","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":39.3109639674762,"y":-90,"SUBJN":"P-03","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":47.7158150344177,"y":-85.5155894762892,"SUBJN":"P-03","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":55.0689854018933,"y":-90,"SUBJN":"P-03","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":"","showInLegend":true},{"USUBJID":"P-05","COLOR_GROUP":"PR","name":"PR","color":"#00b159","data":[{"x":0,"y":0,"SUBJN":"P-05","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":8.76714123015899,"y":-3.34762279574425,"SUBJN":"P-05","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":13.6124634294478,"y":-32.4229054489364,"SUBJN":"P-05","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":15.7745249579757,"y":-47.978890642914,"SUBJN":"P-05","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":21.6514269226466,"y":-61.5884820068162,"SUBJN":"P-05","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":31.3007151208231,"y":-37.2868219141966,"SUBJN":"P-05","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":40.4571480318377,"y":-47.8443022030223,"SUBJN":"P-05","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":47.0969058882051,"y":-74.1131207506082,"SUBJN":"P-05","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":58.9191776107241,"y":-69.0308545055767,"SUBJN":"P-05","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-09","COLOR_GROUP":"PR","name":"PR","color":"#00b159","data":[{"x":0,"y":0,"SUBJN":"P-09","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":7.97175166164669,"y":-53.6523111705213,"SUBJN":"P-09","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":16.4959130049701,"y":-58.9847024268276,"SUBJN":"P-09","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":23.4988585468241,"y":-67.4711094315291,"SUBJN":"P-09","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-02","COLOR_GROUP":"SD","name":"SD","color":"#ffc425","data":[{"x":0,"y":0,"SUBJN":"P-02","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":8.27039283497007,"y":-11.2960867907992,"SUBJN":"P-02","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":"","showInLegend":true},{"USUBJID":"P-08","COLOR_GROUP":"SD","name":"SD","color":"#ffc425","data":[{"x":0,"y":0,"SUBJN":"P-08","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":8.54147457671499,"y":-1.60873974626918,"SUBJN":"P-08","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":16.312896238592,"y":40.2604706647786,"SUBJN":"P-08","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":20.3812532684081,"y":96.9811995728385,"SUBJN":"P-08","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-10","COLOR_GROUP":"SD","name":"SD","color":"#ffc425","data":[{"x":0,"y":0,"SUBJN":"P-10","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":7.99601808015076,"y":-4.78396057823358,"SUBJN":"P-10","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":16.6260196300687,"y":-8.88842048601055,"SUBJN":"P-10","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":24.2458742640104,"y":33.7903521763082,"SUBJN":"P-10","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-12","COLOR_GROUP":"SD","name":"SD","color":"#ffc425","data":[{"x":0,"y":0,"SUBJN":"P-12","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":7.82137112656123,"y":10.885965714799,"SUBJN":"P-12","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":15.1403609378022,"y":17.7108262073373,"SUBJN":"P-12","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-13","COLOR_GROUP":"SD","name":"SD","color":"#ffc425","data":[{"x":0,"y":0,"SUBJN":"P-13","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":9.74547270046142,"y":-11.1180627081355,"SUBJN":"P-13","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":15.750440439611,"y":-7.42321215949101,"SUBJN":"P-13","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-14","COLOR_GROUP":"SD","name":"SD","color":"#ffc425","data":[{"x":0,"y":0,"SUBJN":"P-14","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":8.57615291748939,"y":-38.8573511509394,"SUBJN":"P-14","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":11.9772636149116,"y":0,"SUBJN":"P-14","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":16.247289104042,"y":-4.84930493738937,"SUBJN":"P-14","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false},{"USUBJID":"P-18","COLOR_GROUP":"SD","name":"SD","color":"#ffc425","data":[{"x":0,"y":0,"SUBJN":"P-18","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":7.93312879953356,"y":18.9072818575107,"SUBJN":"P-18","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}},{"x":15.5849288388229,"y":44.2552921629917,"SUBJN":"P-18","dataLabels":{"enabled":false,"format":"{point.SUBJN}","verticalAlign":"middle","align":"left","style":{"fontSize":"9px"}}}],"linkedTo":":previous","showInLegend":false}]},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":["hc_opts.tooltip.formatter"],"jsHooks":[]}</script>
+
+???
+(!) fix lower y limit to -100
+zoomable - emphasize
+
+---
+name: waterfall
+exclude: false
+
+# Hidden Data
+
+<div id="htmlwidget-0f4687c3d7eee0666a57" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0f4687c3d7eee0666a57">{"x":{"hc_opts":{"title":{"text":null},"yAxis":{"title":{"text":"Change in target lesions from baseline [%]"},"type":"linear","plotBands":{"color":"#e5e5e5","from":-30,"to":20}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"SUBJN":"P-07","BOR":"PD","data":{"x":[0,10.0774717616457],"y":[0,120.798365416413]},"PCHG":120.798365416413,"ttdata":[{"x":0,"y":0},{"x":10.0774717616457,"y":120.798365416413}],"color":"#d11141","y":120.798365416413,"name":"P-07"},{"SUBJN":"P-15","BOR":"PD","data":{"x":[0,9.06184580991392],"y":[0,50.5468435498701]},"PCHG":50.5468435498701,"ttdata":[{"x":0,"y":0},{"x":9.06184580991392,"y":50.5468435498701}],"color":"#d11141","y":50.5468435498701,"name":"P-15"},{"SUBJN":"P-04","BOR":"PD","data":{"x":[0,9.46974352515671,16.8443320827657],"y":[0,43.3181869279841,63.4789453538999]},"PCHG":43.3181869279841,"ttdata":[{"x":0,"y":0},{"x":9.46974352515671,"y":43.3181869279841},{"x":16.8443320827657,"y":63.4789453538999}],"color":"#d11141","y":43.3181869279841,"name":"P-04"},{"SUBJN":"P-06","BOR":"PD","data":{"x":[0,15.9489923587499],"y":[0,30.6533388819517]},"PCHG":30.6533388819517,"ttdata":[{"x":0,"y":0},{"x":15.9489923587499,"y":30.6533388819517}],"color":"#d11141","y":30.6533388819517,"name":"P-06"},{"SUBJN":"P-17","BOR":"PD","data":{"x":[0,4.08748697665159,8.0497065373978],"y":[0,25.5373261652282,32.5411754576016]},"PCHG":25.5373261652282,"ttdata":[{"x":0,"y":0},{"x":4.08748697665159,"y":25.5373261652282},{"x":8.0497065373978,"y":32.5411754576016}],"color":"#d11141","y":25.5373261652282,"name":"P-17"},{"SUBJN":"P-01","BOR":"PD","data":{"x":[0,7.24806104786429,12.3672634753898],"y":[0,25.4601556647842,25.0469375836303]},"PCHG":25.0469375836303,"ttdata":[{"x":0,"y":0},{"x":7.24806104786429,"y":25.4601556647842},{"x":12.3672634753898,"y":25.0469375836303}],"color":"#d11141","y":25.0469375836303,"name":"P-01"},{"SUBJN":"P-18","BOR":"SD","data":{"x":[0,7.93312879953356,15.5849288388229],"y":[0,18.9072818575107,44.2552921629917]},"PCHG":18.9072818575107,"ttdata":[{"x":0,"y":0},{"x":7.93312879953356,"y":18.9072818575107},{"x":15.5849288388229,"y":44.2552921629917}],"color":"#ffc425","y":18.9072818575107,"name":"P-18"},{"SUBJN":"P-16","BOR":"PD","data":{"x":[0,5.81068948083422],"y":[0,15.5449931406684]},"PCHG":15.5449931406684,"ttdata":[{"x":0,"y":0},{"x":5.81068948083422,"y":15.5449931406684}],"color":"#d11141","y":15.5449931406684,"name":"P-16"},{"SUBJN":"P-12","BOR":"SD","data":{"x":[0,7.82137112656123,15.1403609378022],"y":[0,10.885965714799,17.7108262073373]},"PCHG":10.885965714799,"ttdata":[{"x":0,"y":0},{"x":7.82137112656123,"y":10.885965714799},{"x":15.1403609378022,"y":17.7108262073373}],"color":"#ffc425","y":10.885965714799,"name":"P-12"},{"SUBJN":"P-08","BOR":"SD","data":{"x":[0,8.54147457671499,16.312896238592,20.3812532684081],"y":[0,-1.60873974626918,40.2604706647786,96.9811995728385]},"PCHG":-1.60873974626918,"ttdata":[{"x":0,"y":0},{"x":8.54147457671499,"y":-1.60873974626918},{"x":16.312896238592,"y":40.2604706647786},{"x":20.3812532684081,"y":96.9811995728385}],"color":"#ffc425","y":-1.60873974626918,"name":"P-08"},{"SUBJN":"P-11","BOR":"PD","data":{"x":[0,6.24478656905679],"y":[0,-4.66471801878019]},"PCHG":-4.66471801878019,"ttdata":[{"x":0,"y":0},{"x":6.24478656905679,"y":-4.66471801878019}],"color":"#d11141","y":-4.66471801878019,"name":"P-11"},{"SUBJN":"P-10","BOR":"SD","data":{"x":[0,7.99601808015076,16.6260196300687,24.2458742640104],"y":[0,-4.78396057823358,-8.88842048601055,33.7903521763082]},"PCHG":-8.88842048601055,"ttdata":[{"x":0,"y":0},{"x":7.99601808015076,"y":-4.78396057823358},{"x":16.6260196300687,"y":-8.88842048601055},{"x":24.2458742640104,"y":33.7903521763082}],"color":"#ffc425","y":-8.88842048601055,"name":"P-10"},{"SUBJN":"P-13","BOR":"SD","data":{"x":[0,9.74547270046142,15.750440439611],"y":[0,-11.1180627081355,-7.42321215949101]},"PCHG":-11.1180627081355,"ttdata":[{"x":0,"y":0},{"x":9.74547270046142,"y":-11.1180627081355},{"x":15.750440439611,"y":-7.42321215949101}],"color":"#ffc425","y":-11.1180627081355,"name":"P-13"},{"SUBJN":"P-02","BOR":"SD","data":{"x":[0,8.27039283497007],"y":[0,-11.2960867907992]},"PCHG":-11.2960867907992,"ttdata":[{"x":0,"y":0},{"x":8.27039283497007,"y":-11.2960867907992}],"color":"#ffc425","y":-11.2960867907992,"name":"P-02"},{"SUBJN":"P-14","BOR":"SD","data":{"x":[0,8.57615291748939,11.9772636149116,16.247289104042],"y":[0,-38.8573511509394,0,-4.84930493738937]},"PCHG":-38.8573511509394,"ttdata":[{"x":0,"y":0},{"x":8.57615291748939,"y":-38.8573511509394},{"x":11.9772636149116,"y":0},{"x":16.247289104042,"y":-4.84930493738937}],"color":"#ffc425","y":-38.8573511509394,"name":"P-14"},{"SUBJN":"P-09","BOR":"PR","data":{"x":[0,7.97175166164669,16.4959130049701,23.4988585468241],"y":[0,-53.6523111705213,-58.9847024268276,-67.4711094315291]},"PCHG":-67.4711094315291,"ttdata":[{"x":0,"y":0},{"x":7.97175166164669,"y":-53.6523111705213},{"x":16.4959130049701,"y":-58.9847024268276},{"x":23.4988585468241,"y":-67.4711094315291}],"color":"#00b159","y":-67.4711094315291,"name":"P-09"},{"SUBJN":"P-05","BOR":"PR","data":{"x":[0,8.76714123015899,13.6124634294478,15.7745249579757,21.6514269226466,31.3007151208231,40.4571480318377,47.0969058882051,58.9191776107241],"y":[0,-3.34762279574425,-32.4229054489364,-47.978890642914,-61.5884820068162,-37.2868219141966,-47.8443022030223,-74.1131207506082,-69.0308545055767]},"PCHG":-74.1131207506082,"ttdata":[{"x":0,"y":0},{"x":8.76714123015899,"y":-3.34762279574425},{"x":13.6124634294478,"y":-32.4229054489364},{"x":15.7745249579757,"y":-47.978890642914},{"x":21.6514269226466,"y":-61.5884820068162},{"x":31.3007151208231,"y":-37.2868219141966},{"x":40.4571480318377,"y":-47.8443022030223},{"x":47.0969058882051,"y":-74.1131207506082},{"x":58.9191776107241,"y":-69.0308545055767}],"color":"#00b159","y":-74.1131207506082,"name":"P-05"},{"SUBJN":"P-03","BOR":"PR","data":{"x":[0,7.52058714068014,11.6699138261984,15.3598914121365,23.5219581418641,31.6651649223771,39.3109639674762,47.7158150344177,55.0689854018933],"y":[0,-70.1612707368888,-55.0810321513374,-62.5403788281878,-71.983500166567,-76.001985034496,-90,-85.5155894762892,-90]},"PCHG":-90,"ttdata":[{"x":0,"y":0},{"x":7.52058714068014,"y":-70.1612707368888},{"x":11.6699138261984,"y":-55.0810321513374},{"x":15.3598914121365,"y":-62.5403788281878},{"x":23.5219581418641,"y":-71.983500166567},{"x":31.6651649223771,"y":-76.001985034496},{"x":39.3109639674762,"y":-90},{"x":47.7158150344177,"y":-85.5155894762892},{"x":55.0689854018933,"y":-90}],"color":"#00b159","y":-90,"name":"P-03"}],"type":"column"}],"xAxis":{"type":"category","title":{"text":"Subject"}},"subtitle":{"text":"BOR: <span style='color: #00b159'> &#x25BA; <\/span>PR        <span style='color: #ffc425'> &#x25BA; <\/span>SD        <span style='color: #d11141'> &#x25BA; <\/span>PD","floating":true,"align":"right","y":30,"style":{"font-size":"130%","fontWeight":"bold"}},"tooltip":{"useHTML":true,"pointFormatter":"function() {\n  var point = this;\n  console.log(point);\n  console.log(point.ttdata);\n  setTimeout(function() {\n\n  $(\"#tooltipchart-7a0he5on1h\").highcharts({\n  title: {\n    text: point.name\n  },\n  yAxis: {\n    title: {\n      text: null\n    }\n  },\n  credits: {\n    enabled: false\n  },\n  exporting: {\n    enabled: false\n  },\n  chart: {\n    backgroundColor: \"transparent\",\n    type: \"line\"\n  },\n  legend: {\n    enabled: false\n  },\n  plotOptions: {\n    series: {\n      animation: 2000,\n      name: point.name\n    }\n  },\n  subtitle: {\n    text: \"Change from BL (%)\"\n  },\n  series: [\n    {\n      data: point.ttdata,\n      color: point.color\n    }\n  ]\n});\n\n  }, 0);\n\n  return '<div id=\"tooltipchart-7a0he5on1h\" style=\"width: 250px; height: 150px;\"><\/div>';\n\n  }"}},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":["hc_opts.tooltip.pointFormatter"],"jsHooks":[]}</script>
+
+---
+name: help-purrr
+exclude: false
+
+# Help: purrr package
+
+&lt;img src="pics/purrr_cs_2.png" style = "height: 85%; width: 85%;"&gt;
+
+---
+name: highcharter-lp
+exclude: false
+
+# Help: jkunst.com/highcharter
+
+&lt;img src="pics/highcharter-lp.png" style = "height: 100%; width: 100%;"&gt;
+
+---
+name: help-doc
+exclude: false
+
+
+# Help: documentation + jsfiddle/codepen
+
+&lt;img src="pics/jsfiddle.png" style = "height: 100%; width: 100%;"&gt;
+
+???
+some javascript knowledge will help but it isn't necessary
+
+---
+name: summary
+exclude: false
+
+
+# Summary
+
+* costs money for production use
+* high quality graphics
+* different from ggplot2
+* purrr package will be useful
+* check out [jkunst.com/highcharter](http://jkunst.com/highcharter/)
+* documentation is great
+
+
+???
+high quality graphics: animation also
+abt including: I just wrote the code and it appeared
+
+---
+name: questions
+
+&lt;img src="pics/templ_questions.png" style="position: fixed; top:40%; left: 25%"&gt;
+
+---
+name: doing
+
+&lt;h1&gt;&lt;span style='color:#3d94d1; position: fixed; top: 40%; left: 15%'&gt;Doing now what patients need next &lt;/span&gt;&lt;/h1&gt;
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
