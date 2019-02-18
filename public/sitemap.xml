@@ -3,43 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/blog/hc-spider/</loc>
-    <lastmod>2019-02-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/blog/</loc>
-    <lastmod>2019-02-19T00:00:00+00:00</lastmod>
+    <loc>https://idmn.netlify.com/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://idmn.netlify.com/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2019-02-19T00:00:00+00:00</lastmod>
+    <loc>https://idmn.netlify.com/tags/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://idmn.netlify.com/tags/tags/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/tags/</loc>
-    <priority>0</priority>
+    <loc>https://idmn.netlify.com/about/</loc>
   </url>
   
   <url>
-    <loc>/about/</loc>
-  </url>
-  
-  <url>
-    <loc>/slides/</loc>
+    <loc>https://idmn.netlify.com/slides/</loc>
   </url>
   
 </urlset>
