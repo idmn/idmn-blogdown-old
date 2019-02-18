@@ -1,41 +1,51 @@
-baseurl = "/"
+# converting Disqus:
+#library(tidyverse)
+#library(stringr)
+#comments <- read_csv("~/Downloads/datascienceish-2017-06-09T22-20-06.652937-links.csv", col_names = "url1") %>%
+#    filter(str_detect(url1, "\\/$")) %>%
+#    mutate(url2 = str_to_lower(url1),
+#           url2 = str_replace_all(url2, "http://julia", "https://julia"))
+#write_csv(comments, "~/Desktop/url_mapping.csv")
+
+baseurl = "https://idmn.netlify.com"
 languageCode = "en-us"
-title = "A Hugo website"
-theme = "hugo-lithium"
-googleAnalytics = ""
-disqusShortname = ""
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+title = "Iaroslav Domin"
+theme = "cocoa-eh-hugo-theme"
+builddrafts = true
+canonifyurls = true
 enableEmoji = true
+contentdir = "content"
+layoutdir = "layouts"
+publishdir = "public"
+author = "Iaroslav Domin"
+#disqusshortname = "datascienceish"
+#googleAnalytics = "UA-68765210-1"
+pluralizelisttitles = false
+ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
+
 
 [permalinks]
-    post = "/:year/:month/:day/:slug/"
-
-[[menu.main]]
-    name = "About"
-    url = "/about/"
-[[menu.main]]
-    name = "GitHub"
-    url = "https://github.com/idmn"
-
+blog = "/blog/:slug/"
 
 [params]
-    description = "A website built through Hugo and blogdown."
-
-    # options for highlight.js (version, additional languages, and theme)
-    highlightjsVersion = "9.12.0"
-    highlightjsCDN = "//cdnjs.cloudflare.com/ajax/libs"
-    highlightjsLang = ["r", "yaml"]
-    highlightjsTheme = "github"
-
-    MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs"
-    MathJaxVersion = "2.7.5"
-
-    # path to the favicon, under "static"
-    favicon = "images/favicon.ico"
-
-    [params.logo]
-    url = "logo.png"
-    width = 50
-    height = 50
-    alt = "Logo"
+dateform = "Jan 2, 2006"
+dateformfull = "Mon Jan 2 2006 15:04:05 MST"
+description = "A blog by Iaroslav Domin"
+copyright = "Copyright © 2019 Iaroslav Domin"
+logofile = "_images/old_bicycle.png"
+faviconfile = "_images/Pencil_29779.ico"
+highlightjs = true
+# options for highlight.js (version, additional languages, and theme)
+highlightjsVersion = "9.11.0"
+highlightjsCDN = "https://cdn.bootcss.com"
+highlightjsLang = ["r", "yaml"]
+highlightjsTheme = "solarized-dark"
+progressively = true
+latestpostcount = 5
+github = "idmn"
+#email = "you@example.com"
+#linkedin = "juliasilge"
+#twitter = "juliasilge"
+social_banner = "img/banner.png"
+posts_navigation = true
 

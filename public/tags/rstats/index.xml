@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rstats on Iaroslav Domin</title>
+    <link>/tags/rstats/</link>
+    <description>Recent content in Rstats on Iaroslav Domin</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 20 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/rstats/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Feeling the rstudio::conf ❤️</title>
+      <link>/blog/rstudio-conf-2019/</link>
+      <pubDate>Sun, 20 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/rstudio-conf-2019/</guid>
+      <description>I am heading home from my third year of attending rstudio::conf! If you weren’t there, watch for the videos to be released so you can check out the talks; I know I will do the same so I can see the talks I was forced to miss by scheduling constraints. I love this conference, and once again this year, the organizers have succeeded in building an impactful, valuable, inclusive conference.</description>
+    </item>
+    
+  </channel>
+</rss>
