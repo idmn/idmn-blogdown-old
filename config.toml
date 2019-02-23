@@ -19,7 +19,7 @@ layoutdir = "layouts"
 publishdir = "public"
 author = "Iaroslav Domin"
 #disqusshortname = "datascienceish"
-#googleAnalytics = "UA-68765210-1"
+googleAnalytics = "UA-135064337-1"
 pluralizelisttitles = false
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
 
