@@ -10,8 +10,30 @@ meta_img: /images/image.jpg
 ---
 
 
+```{r message=FALSE, warning=FALSE}
+library(readr)
+library(ggplot2)
+sumldiam <- read_csv("data/sumldiam.csv")
+```
+
+
+
 ```{r}
-library(highcharter)
-highcharts_demo()
+ggplot(sumldiam, aes(x, y, group = SUBJ, color = BOR)) +
+    geom_point(size = 1.1) +
+    geom_line(alpha = .7, size = 1) +
+    scale_color_manual(
+        "Confirmed BOR\n(Per Protocol)",
+        values = c("CR" = "#00aedb", "PR" = "#00b159",
+                   "SD" = "#ffc425", "PD" = "#d11141",
+                   "NE" = "#545454"),
+        guide  = guide_legend(order = 1)
+    ) +
+    theme_light() +
+    geom_hline(yintercept = 0, color = "gray75") +
+    labs(y = "Change in target lesions from baseline [%]",
+         x = "Week completed after treatment start") +
+    theme(panel.grid = element_blank()) +
+    NULL
 ```
 

@@ -18,56 +18,28 @@
       
       <guid>/blog/hc-spider/</guid>
       <description>
-&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/proj4js/proj4.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/highcharts/css/motion.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;link href=&#34;/rmarkdown-libs/highcharts/css/htmlwdgtgrid.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/highcharts.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/highcharts-3d.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/highcharts-more.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/stock.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/map.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/annotations.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/boost.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/data.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/drag-panes.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/drilldown.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/item-series.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/offline-exporting.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/overlapping-datalabels.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/exporting.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/export-data.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/funnel.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/heatmap.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/treemap.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/sankey.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/solid-gauge.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/streamgraph.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/sunburst.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/vector.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/wordcloud.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/xrange.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/tilemap.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/venn.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/gantt.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/timeline.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/modules/parallel-coordinates.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/plugins/grouped-categories.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/plugins/motion.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/plugins/multicolor_series.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/custom/reset.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/custom/symbols-extra.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highcharts/custom/text-symbols.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/highchart-binding/highchart.js&#34;&gt;&lt;/script&gt;
 
 
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(highcharter)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Highcharts (www.highcharts.com) is a Highsoft software product which is&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## not free for commercial and Governmental use&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;highcharts_demo()&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:100%;height:500px;&#34; class=&#34;highchart html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;hc_opts&#34;:{&#34;title&#34;:{&#34;text&#34;:&#34;Monthly Average Temperature&#34;},&#34;yAxis&#34;:{&#34;title&#34;:{&#34;text&#34;:&#34;Temperature&#34;}},&#34;credits&#34;:{&#34;enabled&#34;:false},&#34;exporting&#34;:{&#34;enabled&#34;:false},&#34;plotOptions&#34;:{&#34;series&#34;:{&#34;label&#34;:{&#34;enabled&#34;:false},&#34;turboThreshold&#34;:0},&#34;treemap&#34;:{&#34;layoutAlgorithm&#34;:&#34;squarified&#34;}},&#34;subtitle&#34;:{&#34;text&#34;:&#34;Source: WorldClimate.com&#34;},&#34;xAxis&#34;:{&#34;title&#34;:{&#34;text&#34;:&#34;Months&#34;},&#34;categories&#34;:[&#34;Jan&#34;,&#34;Feb&#34;,&#34;Mar&#34;,&#34;Apr&#34;,&#34;May&#34;,&#34;Jun&#34;,&#34;Jul&#34;,&#34;Aug&#34;,&#34;Sep&#34;,&#34;Oct&#34;,&#34;Nov&#34;,&#34;Dec&#34;]},&#34;series&#34;:[{&#34;data&#34;:[7,6.9,9.5,14.5,18.2,21.5,25.2,26.5,23.3,18.3,13.9,9.6],&#34;name&#34;:&#34;Tokyo&#34;},{&#34;data&#34;:[3.9,4.2,5.7,8.5,11.9,15.2,17,16.6,14.2,10.3,6.6,4.8],&#34;name&#34;:&#34;London&#34;},{&#34;data&#34;:[-0.9,0.6,3.5,8.4,13.5,17,18.6,17.9,14.3,9,3.9,1],&#34;name&#34;:&#34;Berlin&#34;}]},&#34;theme&#34;:{&#34;chart&#34;:{&#34;backgroundColor&#34;:&#34;transparent&#34;}},&#34;conf_opts&#34;:{&#34;global&#34;:{&#34;Date&#34;:null,&#34;VMLRadialGradientURL&#34;:&#34;http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png&#34;,&#34;canvasToolsURL&#34;:&#34;http =//code.highcharts.com/list(version)/modules/canvas-tools.js&#34;,&#34;getTimezoneOffset&#34;:null,&#34;timezoneOffset&#34;:0,&#34;useUTC&#34;:true},&#34;lang&#34;:{&#34;contextButtonTitle&#34;:&#34;Chart context menu&#34;,&#34;decimalPoint&#34;:&#34;.&#34;,&#34;downloadJPEG&#34;:&#34;Download JPEG image&#34;,&#34;downloadPDF&#34;:&#34;Download PDF document&#34;,&#34;downloadPNG&#34;:&#34;Download PNG image&#34;,&#34;downloadSVG&#34;:&#34;Download SVG vector image&#34;,&#34;drillUpText&#34;:&#34;Back to {series.name}&#34;,&#34;invalidDate&#34;:null,&#34;loading&#34;:&#34;Loading...&#34;,&#34;months&#34;:[&#34;January&#34;,&#34;February&#34;,&#34;March&#34;,&#34;April&#34;,&#34;May&#34;,&#34;June&#34;,&#34;July&#34;,&#34;August&#34;,&#34;September&#34;,&#34;October&#34;,&#34;November&#34;,&#34;December&#34;],&#34;noData&#34;:&#34;No data to display&#34;,&#34;numericSymbols&#34;:[&#34;k&#34;,&#34;M&#34;,&#34;G&#34;,&#34;T&#34;,&#34;P&#34;,&#34;E&#34;],&#34;printChart&#34;:&#34;Print chart&#34;,&#34;resetZoom&#34;:&#34;Reset zoom&#34;,&#34;resetZoomTitle&#34;:&#34;Reset zoom level 1:1&#34;,&#34;shortMonths&#34;:[&#34;Jan&#34;,&#34;Feb&#34;,&#34;Mar&#34;,&#34;Apr&#34;,&#34;May&#34;,&#34;Jun&#34;,&#34;Jul&#34;,&#34;Aug&#34;,&#34;Sep&#34;,&#34;Oct&#34;,&#34;Nov&#34;,&#34;Dec&#34;],&#34;thousandsSep&#34;:&#34; &#34;,&#34;weekdays&#34;:[&#34;Sunday&#34;,&#34;Monday&#34;,&#34;Tuesday&#34;,&#34;Wednesday&#34;,&#34;Thursday&#34;,&#34;Friday&#34;,&#34;Saturday&#34;]}},&#34;type&#34;:&#34;chart&#34;,&#34;fonts&#34;:[],&#34;debug&#34;:false},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(readr)
+library(ggplot2)
+sumldiam &amp;lt;- read_csv(&amp;quot;data/sumldiam.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(sumldiam, aes(x, y, group = SUBJ, color = BOR)) +
+    geom_point(size = 1.1) +
+    geom_line(alpha = .7, size = 1) +
+    scale_color_manual(
+        &amp;quot;Confirmed BOR\n(Per Protocol)&amp;quot;,
+        values = c(&amp;quot;CR&amp;quot; = &amp;quot;#00aedb&amp;quot;, &amp;quot;PR&amp;quot; = &amp;quot;#00b159&amp;quot;,
+                   &amp;quot;SD&amp;quot; = &amp;quot;#ffc425&amp;quot;, &amp;quot;PD&amp;quot; = &amp;quot;#d11141&amp;quot;,
+                   &amp;quot;NE&amp;quot; = &amp;quot;#545454&amp;quot;),
+        guide  = guide_legend(order = 1)
+    ) +
+    theme_light() +
+    geom_hline(yintercept = 0, color = &amp;quot;gray75&amp;quot;) +
+    labs(y = &amp;quot;Change in target lesions from baseline [%]&amp;quot;,
+         x = &amp;quot;Week completed after treatment start&amp;quot;) +
+    theme(panel.grid = element_blank()) +
+    NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/blog/2019/hc-spider_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 </description>
     </item>
     

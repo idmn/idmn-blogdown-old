@@ -21,7 +21,7 @@ author = "Iaroslav Domin"
 #disqusshortname = "datascienceish"
 googleAnalytics = "UA-135064337-1"
 pluralizelisttitles = false
-ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
+ignoreFiles = ["\\.Rmd$", "_files$", "_cache$", "data"]
 
 
 [permalinks]

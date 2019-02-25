@@ -9,53 +9,25 @@ description: Desc
 meta_img: /images/image.jpg
 ---
 
-<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
-<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
-<script src="/rmarkdown-libs/proj4js/proj4.js"></script>
-<link href="/rmarkdown-libs/highcharts/css/motion.css" rel="stylesheet" />
-<link href="/rmarkdown-libs/highcharts/css/htmlwdgtgrid.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/highcharts/highcharts.js"></script>
-<script src="/rmarkdown-libs/highcharts/highcharts-3d.js"></script>
-<script src="/rmarkdown-libs/highcharts/highcharts-more.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/stock.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/map.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/annotations.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/boost.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/data.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/drag-panes.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/drilldown.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/item-series.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/offline-exporting.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/overlapping-datalabels.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/exporting.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/export-data.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/funnel.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/heatmap.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/treemap.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/sankey.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/solid-gauge.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/streamgraph.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/sunburst.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/vector.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/wordcloud.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/xrange.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/tilemap.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/venn.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/gantt.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/timeline.js"></script>
-<script src="/rmarkdown-libs/highcharts/modules/parallel-coordinates.js"></script>
-<script src="/rmarkdown-libs/highcharts/plugins/grouped-categories.js"></script>
-<script src="/rmarkdown-libs/highcharts/plugins/motion.js"></script>
-<script src="/rmarkdown-libs/highcharts/plugins/multicolor_series.js"></script>
-<script src="/rmarkdown-libs/highcharts/custom/reset.js"></script>
-<script src="/rmarkdown-libs/highcharts/custom/symbols-extra.js"></script>
-<script src="/rmarkdown-libs/highcharts/custom/text-symbols.js"></script>
-<script src="/rmarkdown-libs/highchart-binding/highchart.js"></script>
 
 
-<pre class="r"><code>library(highcharter)</code></pre>
-<pre><code>## Highcharts (www.highcharts.com) is a Highsoft software product which is</code></pre>
-<pre><code>## not free for commercial and Governmental use</code></pre>
-<pre class="r"><code>highcharts_demo()</code></pre>
-<div id="htmlwidget-1" style="width:100%;height:500px;" class="highchart html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"hc_opts":{"title":{"text":"Monthly Average Temperature"},"yAxis":{"title":{"text":"Temperature"}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"}},"subtitle":{"text":"Source: WorldClimate.com"},"xAxis":{"title":{"text":"Months"},"categories":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]},"series":[{"data":[7,6.9,9.5,14.5,18.2,21.5,25.2,26.5,23.3,18.3,13.9,9.6],"name":"Tokyo"},{"data":[3.9,4.2,5.7,8.5,11.9,15.2,17,16.6,14.2,10.3,6.6,4.8],"name":"London"},{"data":[-0.9,0.6,3.5,8.4,13.5,17,18.6,17.9,14.3,9,3.9,1],"name":"Berlin"}]},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>library(readr)
+library(ggplot2)
+sumldiam &lt;- read_csv(&quot;data/sumldiam.csv&quot;)</code></pre>
+<pre class="r"><code>ggplot(sumldiam, aes(x, y, group = SUBJ, color = BOR)) +
+    geom_point(size = 1.1) +
+    geom_line(alpha = .7, size = 1) +
+    scale_color_manual(
+        &quot;Confirmed BOR\n(Per Protocol)&quot;,
+        values = c(&quot;CR&quot; = &quot;#00aedb&quot;, &quot;PR&quot; = &quot;#00b159&quot;,
+                   &quot;SD&quot; = &quot;#ffc425&quot;, &quot;PD&quot; = &quot;#d11141&quot;,
+                   &quot;NE&quot; = &quot;#545454&quot;),
+        guide  = guide_legend(order = 1)
+    ) +
+    theme_light() +
+    geom_hline(yintercept = 0, color = &quot;gray75&quot;) +
+    labs(y = &quot;Change in target lesions from baseline [%]&quot;,
+         x = &quot;Week completed after treatment start&quot;) +
+    theme(panel.grid = element_blank()) +
+    NULL</code></pre>
+<p><img src="/blog/2019/hc-spider_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
