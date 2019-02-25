@@ -16,7 +16,7 @@ library(ggplot2)
 sumldiam &lt;- read_csv(&quot;data/sumldiam.csv&quot;)</code></pre>
 <pre class="r"><code>ggplot(sumldiam, aes(x, y, group = SUBJ, color = BOR)) +
     geom_point(size = 1.1) +
-    geom_line(alpha = .7, size = 1) +
+    geom_line(alpha = .9, size = 1) +
     scale_color_manual(
         &quot;Confirmed BOR\n(Per Protocol)&quot;,
         values = c(&quot;CR&quot; = &quot;#00aedb&quot;, &quot;PR&quot; = &quot;#00b159&quot;,
