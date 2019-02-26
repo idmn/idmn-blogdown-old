@@ -18,22 +18,28 @@ sumldiam <- read_csv("data/sumldiam.csv")
 
 
 
-```{r dev='CairoPNG', fig.asp=.7}
+```{r dev='CairoPNG', fig.asp=.8, fig.width=10}
 ggplot(sumldiam, aes(x, y, group = SUBJ, color = BOR)) +
+    theme_minimal() +
     geom_point(size = 1.1) +
     geom_line(alpha = .9, size = 1) +
     scale_color_manual(
-        "Confirmed BOR\n(Per Protocol)",
+        "BOR: ",
         values = c("CR" = "#00aedb", "PR" = "#00b159",
                    "SD" = "#ffc425", "PD" = "#d11141",
                    "NE" = "#545454"),
         guide  = guide_legend(order = 1)
     ) +
-    theme_light() +
     geom_hline(yintercept = 0, color = "gray75") +
-    labs(y = "Change in target lesions from baseline [%]",
-         x = "Week completed after treatment start") +
-    theme(panel.grid = element_blank()) +
+    labs(y = NULL,
+         x = "Week") +
+    theme(panel.grid = element_blank(),
+          legend.direction = "horizontal",
+          legend.position = "top",
+          legend.justification = "left",
+          text = element_text(size = 14),
+          plot.title = element_text(size = 17, face = "bold")) +
+    ggtitle("Change in Target Lesions over Time [%]") +
     NULL
 ```
 

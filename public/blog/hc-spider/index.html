@@ -14,7 +14,7 @@
 <meta property="twitter:title" content="Highcharts Spiderplot">
 
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:image" content="//images/image.jpg">
+    <meta property="twitter:image" content="https://idmn.netlify.com/images/image.jpg">
 
 <meta property="twitter:description" content="Desc">
 
@@ -24,7 +24,7 @@
      Iaroslav Domin - Highcharts Spiderplot 
 
 </title>
-<link rel="canonical" href="/blog/hc-spider/">
+<link rel="canonical" href="https://idmn.netlify.com/blog/hc-spider/">
 
 
 <style media="screen">
@@ -892,7 +892,7 @@ margin-left: -4%;
 
 <link rel="shortcut icon"
 
-    href="/_images/Pencil_29779.ico"
+    href="https://idmn.netlify.com/_images/Pencil_29779.ico"
 
 >
 
@@ -908,13 +908,13 @@ margin-left: -4%;
 <section class="header">
 
     <div class="container">
-        <a href="/"><img class="logo" src="/_images/old_bicycle.png" alt="logo" /></a>
+        <a href="https://idmn.netlify.com"><img class="logo" src="https://idmn.netlify.com/_images/old_bicycle.png" alt="logo" /></a>
         <div class="content">
-            <a href="/"><div class="name"><h1>Iaroslav Domin</h1></div></a>
+            <a href="https://idmn.netlify.com"><div class="name"><h1>Iaroslav Domin</h1></div></a>
             <nav>
                 <ul>
                     
-                        <a href="/blog/"><li>Blog</li></a>
+                        <a href="https://idmn.netlify.comblog/"><li>Blog</li></a>
                     
                     
                         
@@ -923,11 +923,11 @@ margin-left: -4%;
                     
                     
                         
-                            <a href="/about/"><li>about</li></a>
+                            <a href="https://idmn.netlify.com/about/"><li>about</li></a>
                         
                     
                         
-                            <a href="/slides/"><li>slides</li></a>
+                            <a href="https://idmn.netlify.com/slides/"><li>slides</li></a>
                         
                     
                 </ul>
@@ -974,22 +974,28 @@ margin-left: -4%;
 library(ggplot2)
 sumldiam &lt;- read_csv(&quot;data/sumldiam.csv&quot;)</code></pre>
 <pre class="r"><code>ggplot(sumldiam, aes(x, y, group = SUBJ, color = BOR)) +
+    theme_minimal() +
     geom_point(size = 1.1) +
     geom_line(alpha = .9, size = 1) +
     scale_color_manual(
-        &quot;Confirmed BOR\n(Per Protocol)&quot;,
+        &quot;BOR: &quot;,
         values = c(&quot;CR&quot; = &quot;#00aedb&quot;, &quot;PR&quot; = &quot;#00b159&quot;,
                    &quot;SD&quot; = &quot;#ffc425&quot;, &quot;PD&quot; = &quot;#d11141&quot;,
                    &quot;NE&quot; = &quot;#545454&quot;),
         guide  = guide_legend(order = 1)
     ) +
-    theme_light() +
     geom_hline(yintercept = 0, color = &quot;gray75&quot;) +
-    labs(y = &quot;Change in target lesions from baseline [%]&quot;,
-         x = &quot;Week completed after treatment start&quot;) +
-    theme(panel.grid = element_blank()) +
+    labs(y = NULL,
+         x = &quot;Week&quot;) +
+    theme(panel.grid = element_blank(),
+          legend.direction = &quot;horizontal&quot;,
+          legend.position = &quot;top&quot;,
+          legend.justification = &quot;left&quot;,
+          text = element_text(size = 14),
+          plot.title = element_text(size = 17, face = &quot;bold&quot;)) +
+    ggtitle(&quot;Change in Target Lesions over Time [%]&quot;) +
     NULL</code></pre>
-<p><img src="/blog/2019/hc-spider_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="https://idmn.netlify.com/blog/2019/hc-spider_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
 
 
                 <br>
@@ -1014,7 +1020,7 @@ sumldiam &lt;- read_csv(&quot;data/sumldiam.csv&quot;)</code></pre>
         <div class="copyright">
 
         
-            <a href="/about">Copyright © 2019 Iaroslav Domin</a>
+            <a href="https://idmn.netlify.comabout">Copyright © 2019 Iaroslav Domin</a>
         
 
         </div>
@@ -1022,7 +1028,7 @@ sumldiam &lt;- read_csv(&quot;data/sumldiam.csv&quot;)</code></pre>
 
         
             <a href="https://github.com/idmn" target="_blank">
-                <img class="icon" src="/img/github.svg" alt="github" />
+                <img class="icon" src="https://idmn.netlify.com/img/github.svg" alt="github" />
             </a>
         
 
@@ -1033,8 +1039,8 @@ sumldiam &lt;- read_csv(&quot;data/sumldiam.csv&quot;)</code></pre>
         
 
         
-            <a href="/index.xml">
-                <img class="icon" src="/img/rss.svg" alt="rss" />
+            <a href="https://idmn.netlify.com/index.xml">
+                <img class="icon" src="https://idmn.netlify.com/img/rss.svg" alt="rss" />
             </a>
         
 
@@ -1062,12 +1068,12 @@ MathJax.Hub.Config({
 </script>
 
 
-  <script src="/js/highlight.min.js" defer></script>
+  <script src="https://idmn.netlify.comjs/highlight.min.js" defer></script>
   
 
 
 
-  <script src="/js/progressively.min.js" defer></script>
+  <script src="https://idmn.netlify.comjs/progressively.min.js" defer></script>
 
 
 
