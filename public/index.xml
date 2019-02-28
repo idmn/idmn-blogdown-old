@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Iaroslav Domin</title>
-    <link>https://idmn.netlify.com/</link>
+    <link>/</link>
     <description>Recent content on Iaroslav Domin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 19 Feb 2019 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://idmn.netlify.com/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Highcharts Spiderplot</title>
-      <link>https://idmn.netlify.com/blog/hc-spider/</link>
+      <link>/blog/hc-spider/</link>
       <pubDate>Tue, 19 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://idmn.netlify.com/blog/hc-spider/</guid>
+      <guid>/blog/hc-spider/</guid>
       <description>
 
 
@@ -45,16 +45,16 @@ sumldiam &amp;lt;- read_csv(&amp;quot;data/sumldiam.csv&amp;quot;)&lt;/code&gt;&
           plot.title = element_text(size = 17, face = &amp;quot;bold&amp;quot;)) +
     ggtitle(&amp;quot;Change in Target Lesions over Time [%]&amp;quot;) +
     NULL&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://idmn.netlify.com/blog/2019/hc-spider_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/blog/2019/hc-spider_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>about</title>
-      <link>https://idmn.netlify.com/about/</link>
+      <link>/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://idmn.netlify.com/about/</guid>
+      <guid>/about/</guid>
       <description>&lt;p&gt;Iaroslav Domin, statistical programmer at &lt;a href=&#34;https://intego-group.com/&#34;&gt;Intego Group&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;This blog is built with &lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown&lt;/a&gt; and &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt;, and deployed using &lt;a href=&#34;https://www.netlify.com/&#34;&gt;Netlify&lt;/a&gt;.&lt;/p&gt;
@@ -63,12 +63,12 @@ sumldiam &amp;lt;- read_csv(&amp;quot;data/sumldiam.csv&amp;quot;)&lt;/code&gt;&
     
     <item>
       <title>slides</title>
-      <link>https://idmn.netlify.com/slides/</link>
+      <link>/slides/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://idmn.netlify.com/slides/</guid>
+      <guid>/slides/</guid>
       <description>&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://idmn.netlify.com/slides/highcharts-clinical&#34;&gt;Highcharts for Clinical Graphs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;/slides/highcharts-clinical&#34;&gt;Highcharts for Clinical Graphs&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

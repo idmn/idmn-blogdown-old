@@ -122,17 +122,24 @@ name: plotly + bokeh
 .pull-left[
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Plotly-logo-01-square.png/220px-Plotly-logo-01-square.png" height = 200>
 
-* written in JavaScript
-* free, paid only for additional tools
+```{r eval=FALSE}
+library(plotly)
+```
+
+* JavaScript
+* free, pay only for additional support
 * official R package from the developers 
-* versatile
-* can turn ggplot2 object into plotly 
+* can translate ggplot2 to plotly 
 ]
 
 .pull-right[
 <img src="http://pyviz.org/assets/bokeh.png" height = 200>
 
-* written in Python
+```{r eval=FALSE}
+library(rbokeh)
+```
+
+* Python
 * open-source
 * fast
 * not so fancy
@@ -152,10 +159,14 @@ exclude: false
 ]
 
 .pull-right[
-* written in javascript
-* probably the best looking
+```{r eval=FALSE}
+library(highcharter)
+```
+
+* <span style='color:#3d94d1; font-size:24px;'>**looks awesome!**</span>
+* javascript
 * very different from ggplot2
-* but excellent documentation
+* excellent documentation
 ]
 --
 exclude: false
@@ -257,40 +268,22 @@ exclude: false
 
 ### No, lists!
 
-```{js, size = 'tiny'}
-    series: [{
-        name: 'Installation',
-        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-    }, {
-        name: 'Manufacturing',
-        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-    }, {
-        name: 'Sales & Distribution',
-        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-    }, {
-        name: 'Project Development',
-        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-    }, {
-        name: 'Other',
-        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-    }],
-
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
-            },
-            chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
-                }
-            }
-        }]
-    }
+```{js}
+series: [{
+    name: 'SUBJ-01',
+    data: [43934, 52503, 57177, 69658, 97031, 119931, 137133]
+}, {
+    name: 'SUBJ-02',
+    data: [24916, 24064, 29742, 29851, 32490, 30282, 38121]
+}, {
+    name: 'SUBJ-03',
+    data: [11744, 17722, 16005, 19771, 20185, 24377, 32147]
+}, {
+    name: 'SUBJ-04',
+    data: [null, null, 7988, 12169, 15112, 22452, 34400]
+}],
+...
 ```
-
 
 ???
 historically - HC initially built for timeseries data
@@ -350,7 +343,7 @@ highchart(
 name: more-lists-1
 exclude: false
 
-# More Lists!
+# We need to go deeper
 
 ```{r more-lists, eval=FALSE}
 highchart(
@@ -361,7 +354,8 @@ highchart(
             2,
             list(y = 3, #<<
                  marker = list(radius = 20), #<<
-                 color = "red"), #<<                    
+                 color = "red", #<<
+                 name = "RED POINT"), #<<
             1)),
         list(name = "B",
            data = c(5, 0, 2))
@@ -378,7 +372,7 @@ we
 name: more-lists-2
 exclude: false
 
-# More Lists!
+# We need to go deeper
 ```{r ref.label="more-lists", echo=FALSE}
 ```
 ???
@@ -629,5 +623,4 @@ name: questions
 name: doing
 
 <h1><span style='color:#3d94d1; position: fixed; top: 40%; left: 15%'>Doing now what patients need next </span></h1>
-
 
