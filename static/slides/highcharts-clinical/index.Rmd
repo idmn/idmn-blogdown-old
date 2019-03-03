@@ -70,12 +70,11 @@ exclude: false
 
 # ggplot2 + shiny
 
+(?) add a gif here and just +-
+
 ### What's good?
 
 * easy to build
-
---
-exclude: false
 
 ### What's bad?
 
@@ -590,7 +589,7 @@ exclude: false
 
 # Help: documentation + jsfiddle/codepen
 
-<img src="pics/jsfiddle.png" style = "height: 100%; width: 100%;">
+<img src="pics/jsfiddle.gif" style = "height: 100%; width: 100%;">
 
 ???
 some javascript knowledge will help but it isn't necessary
