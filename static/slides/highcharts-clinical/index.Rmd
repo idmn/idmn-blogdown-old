@@ -87,29 +87,45 @@ usually familiar
 will not get this feeling
 
 ---
+
 name: fortunately
 exclude: false
 
 # Fortunately
 
-.pull-left[
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/724px-R_logo.svg.png" height="200">
-
-Good as an interface language
-]
-
-.pull-right[
-<div style="display:inline; position: relative; top: 27px;"><img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg"
-height="200">
-</div>
-<div style="position: relative; top: 40px">
-Wide variety of interactive datavis libraries
-</div>
-]
 
 
-???
-do dataviz - work a lot with data - that's why to use R
+<img 
+  src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg"
+  style="display:inline; position: absolute; top: 160px;"
+  height="130">
+  
+<img 
+  src="pics/python-logo.svg"
+  style="display:inline; position: absolute; top: 350px; left: 85px;"
+  height="150">
+  
+<span style="position: absolute; top:500px; left: 110px; font-size: 450%;">
+...
+</span>
+  
+
+  
+<img 
+  src="pics/arrow-right-blue.svg"
+  style="position: absolute; left: 290px; top: 270px"
+  width="270">
+  
+<span style="position: absolute; left: 300px; top:335px; font-size: 200%; color:black">
+interfaces
+</span>
+  
+<img 
+  src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/724px-R_logo.svg.png"
+  style="position: absolute; right: 50px; top: 275px"
+  height="200">
+
+
 
 ---
 name: alter
@@ -397,7 +413,73 @@ name: hc-helpers-2
 exclude: false
 
 # It's not that bad actually
-```{r ref.label="not-that-bad", echo=FALSE}
+
+```{r eval=FALSE}
+highchart() %>% #<<
+  hc_add_series(data = c(2, 3, 1), name = "A") %>% 
+  hc_add_series(data = c(5, 0, 2), name = "B") %>% 
+  hc_chart(type = "column") %>%
+  hc_title(text = "Super Meaningful Chart")
+```
+
+---
+name: hc-helpers-3
+exclude: false
+
+# It's not that bad actually
+
+```{r eval=FALSE}
+highchart() %>%
+  hc_add_series(data = c(2, 3, 1), name = "A") %>% #<<
+  hc_add_series(data = c(5, 0, 2), name = "B") %>% #<<
+  hc_chart(type = "column") %>%
+  hc_title(text = "Super Meaningful Chart")
+```
+
+---
+name: hc-helpers-4
+exclude: false
+
+# It's not that bad actually
+
+```{r eval=FALSE}
+highchart() %>%
+  hc_add_series(data = c(2, 3, 1), name = "A") %>% 
+  hc_add_series(data = c(5, 0, 2), name = "B") %>% 
+  hc_chart(type = "column") %>% #<<
+  hc_title(text = "Super Meaningful Chart")
+```
+
+---
+name: hc-helpers-5
+exclude: false
+
+# It's not that bad actually
+
+```{r eval=FALSE}
+highchart() %>%
+  hc_add_series(data = c(2, 3, 1), name = "A") %>% 
+  hc_add_series(data = c(5, 0, 2), name = "B") %>% 
+  hc_chart(type = "column") %>%
+  hc_title(text = "Super Meaningful Chart") #<<
+```
+
+
+---
+name: hc-helpers-6
+exclude: false
+
+# It's not that bad actually
+```{r ref.label="not-that-bad", eval=FALSE}
+```
+
+```{r echo=FALSE, fig.align='center'}
+highchart() %>%
+  hc_add_series(data = c(2, 3, 1), name = "A") %>% 
+  hc_add_series(data = c(5, 0, 2), name = "B") %>% 
+  hc_chart(type = "column") %>%
+  hc_title(text = "Super Meaningful Chart") %>% 
+  hc_size(height = 350, width = 500)
 ```
 
 ???
@@ -567,20 +649,21 @@ hc_wat(sp_df)
 ```
 
 ---
-name: help-purrr
-exclude: false
-
-# Help: purrr package
-
-<img src="pics/purrr_cs_2.png" style = "height: 85%; width: 85%;">
-
----
 name: highcharter-lp
 exclude: false
 
 # Help: jkunst.com/highcharter
 
 <img src="pics/highcharter-lp.png" style = "height: 100%; width: 100%;">
+
+
+---
+name: help-purrr
+exclude: false
+
+# Help: purrr package
+
+<img src="pics/purrr_cs_2.png" style = "height: 85%; width: 85%;">
 
 ---
 name: help-doc
