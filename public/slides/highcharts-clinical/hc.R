@@ -75,7 +75,7 @@ hc_spi <- function(data, colorby = "BOR", show_subjids = FALSE) {
             )
         ) %>%
         hc_yAxis(
-            title = list(text = "Change in target lesions from baseline [%]"),
+            title = list(text = "change in target lesions [%]"),
             plotBands = list(color = '#e5e5e5', from = -30, to = 20),
             # (!) this meesses up zoom on y
             #tickPositions = c(-100, -50, -30, 0, 20, 50, 100, 150),
@@ -84,7 +84,7 @@ hc_spi <- function(data, colorby = "BOR", show_subjids = FALSE) {
             tickWidth = 1,
             gridLineColor = "white") %>%
         hc_xAxis(
-            title = list(text = "Week completed after treatment start")
+            title = list(text = "week")
         ) %>%
         hc_tooltip(formatter = JS("function(){
                                   return ('<b>' + this.point.SUBJN + '<b/>' + '<br> Change: ' + (+this.y.toFixed(1)) + ' % <br>' +

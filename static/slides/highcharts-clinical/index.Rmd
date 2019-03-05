@@ -597,8 +597,8 @@ sp_df %>%
     ) +
     theme(legend.justification = "top",
           text = element_text(size = 15)) +
-    labs(y = "Change in target lesions [%]",
-         x = "Week") +
+    labs(y = "change in target lesions [%]",
+         x = "week") +
     theme(panel.grid = element_blank()) +
     scale_x_continuous(limits = WEEK_range,
                        breaks = round(seq(min(WEEK_range), max(WEEK_range), by = 4)),
