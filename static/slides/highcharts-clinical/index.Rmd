@@ -91,9 +91,7 @@ will not get this feeling
 name: fortunately
 exclude: false
 
-# Fortunately
-
-
+# Interfaces
 
 <img 
   src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg"
@@ -109,23 +107,15 @@ exclude: false
 ...
 </span>
   
-
-  
 <img 
   src="pics/arrow-right-blue.svg"
   style="position: absolute; left: 290px; top: 270px"
   width="270">
-  
-<span style="position: absolute; left: 300px; top:335px; font-size: 200%; color:black">
-interfaces
-</span>
-  
+
 <img 
   src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/724px-R_logo.svg.png"
-  style="position: absolute; right: 50px; top: 275px"
+  style="position: absolute; right: 50px; top: 260px"
   height="200">
-
-
 
 ---
 name: alter
