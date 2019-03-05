@@ -553,7 +553,7 @@ exclude: false
 
 # Spiderplot (ggplot2)
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=11}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, dev='CairoPNG'}
 library(readr)
 library(ggplot2)
 
@@ -597,8 +597,8 @@ sp_df %>%
     ) +
     theme(legend.justification = "top",
           text = element_text(size = 15)) +
-    labs(y = "Change in target lesions from baseline [%]",
-         x = "Week completed after treatment start") +
+    labs(y = "Change in target lesions [%]",
+         x = "Week") +
     theme(panel.grid = element_blank()) +
     scale_x_continuous(limits = WEEK_range,
                        breaks = round(seq(min(WEEK_range), max(WEEK_range), by = 4)),
