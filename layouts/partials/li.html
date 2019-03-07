@@ -1,6 +1,6 @@
-<li class="post-item">
+<li class="post-item" style = "padding-left: 0em;">
             <img style="max-width:100px; display:inline-block;"
              src="{{ .Site.Params.logofile | absURL }}" alt="logo" />
-    <span class="meta">{{ .Date.Format .Site.Params.dateform }}</span>
-    <a href="{{ .Permalink }}">{{ .Title }} test</a>
+    <span class="meta" style = "vertical-align: bottom">{{ .Date.Format .Site.Params.dateform }}</span>
+    <a href="{{ .Permalink }}">{{ .Title }}</a>
 </li>
