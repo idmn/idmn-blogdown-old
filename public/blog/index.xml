@@ -17,7 +17,7 @@
       <pubDate>Tue, 19 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/blog/hc-spider/</guid>
-      <description>library(readr) library(ggplot2) sumldiam &amp;lt;- read_csv(&amp;quot;data/sumldiam.csv&amp;quot;) ggplot(sumldiam, aes(x, y, group = SUBJ, color = BOR)) + theme_minimal() + geom_point(size = 1.1) + geom_line(alpha = .9, size = 1) + scale_color_manual( &amp;quot;BOR: &amp;quot;, values = c(&amp;quot;CR&amp;quot; = &amp;quot;#00aedb&amp;quot;, &amp;quot;PR&amp;quot; = &amp;quot;#00b159&amp;quot;, &amp;quot;SD&amp;quot; = &amp;quot;#ffc425&amp;quot;, &amp;quot;PD&amp;quot; = &amp;quot;#d11141&amp;quot;, &amp;quot;NE&amp;quot; = &amp;quot;#545454&amp;quot;), guide = guide_legend(order = 1) ) + geom_hline(yintercept = 0, color = &amp;quot;gray75&amp;quot;) + labs(y = NULL, x = &amp;quot;Week&amp;quot;) + theme(panel.</description>
+      <description>library(readr)library(ggplot2)sumldiam &amp;lt;- read_csv(&amp;quot;data/sumldiam.csv&amp;quot;)ggplot(sumldiam, aes(x, y, group = SUBJ, color = BOR)) +theme_minimal() +geom_point(size = 1.1) +geom_line(alpha = .9, size = 1) +scale_color_manual(&amp;quot;BOR: &amp;quot;,values = c(&amp;quot;CR&amp;quot; = &amp;quot;#00aedb&amp;quot;, &amp;quot;PR&amp;quot; = &amp;quot;#00b159&amp;quot;,&amp;quot;SD&amp;quot; = &amp;quot;#ffc425&amp;quot;, &amp;quot;PD&amp;quot; = &amp;quot;#d11141&amp;quot;,&amp;quot;NE&amp;quot; = &amp;quot;#545454&amp;quot;),guide = guide_legend(order = 1)) +geom_hline(yintercept = 0, color = &amp;quot;gray75&amp;quot;) +labs(y = NULL,x = &amp;quot;Week&amp;quot;) +theme(panel.</description>
     </item>
     
   </channel>

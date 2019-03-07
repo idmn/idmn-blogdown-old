@@ -1,0 +1,6 @@
+<li class="post-item">
+            <img style="max-width:100px; display:inline-block;"
+             src="{{ .Site.Params.logofile | absURL }}" alt="logo" />
+    <span class="meta">{{ .Date.Format .Site.Params.dateform }}</span>
+    <a href="{{ .Permalink }}">{{ .Title }}</a>
+</li>

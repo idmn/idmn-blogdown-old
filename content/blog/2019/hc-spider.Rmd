@@ -42,4 +42,3 @@ ggplot(sumldiam, aes(x, y, group = SUBJ, color = BOR)) +
     ggtitle("Change in Target Lesions over Time [%]") +
     NULL
 ```
-
