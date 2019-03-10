@@ -59,32 +59,40 @@ exclude: false
 
 # Agenda
 
-1. Interactive visualization in R  options
-2. Highcharts vs ggplot2
+<div style='font-size:28px; line-height: 50px;'>
+1. Interactive visualization in R: options
+2. Highcharts principles
 3. Clinical graphs with Highcharts
 4. Helpful resources
+<div/>
 
 ---
 name: gg-shiny
 exclude: false
 
-# ggplot2 + shiny
+# static plot + shiny
 
-(?) add a gif here and just +-
+<img 
+  src="pics/ggshiny-1.png"
+  style="display:inline; position: absolute; top: 140px; left: 40px;"
+  height="270">
+  
+<img 
+  src="pics/arrow-right-blue.svg"
+  style="position: absolute; left: 415px; top: 230px"
+  width="100">
 
-### What's good?
+<img 
+  src="pics/ggshiny-2.gif"
+  style="display:inline; position: absolute; top: 140px; right: 20px;"
+  height="270">
 
-* easy to build
-
-### What's bad?
-
-* static plot is updated on each interaction
-* limited possibilities
-
-???
-(relatively) easy to build
-usually familiar
-will not get this feeling
+  
+<div style="position: absolute; top:470px; left: 110px; font-size: 200%; line-height: 60px;">
+&#x2611; convenient
+<br/>
+&#9746; limited
+</div>
 
 ---
 
@@ -132,8 +140,8 @@ library(plotly)
 ```
 
 * JavaScript
-* free, pay only for additional support
-* official R package from the developers 
+* free (paid support)
+* official R package 
 * can translate ggplot2 to plotly 
 ]
 
@@ -168,31 +176,24 @@ exclude: false
 library(highcharter)
 ```
 
-* <span style='color:#3d94d1; font-size:24px;'>**looks awesome!**</span>
-* javascript
-* very different from ggplot2
-* excellent documentation
+<div style='line-height: 40px;'>
+* <span style='color:#3d94d1; font-size:28px;'>**looks awesome!**</span>
+* <span style='color:#d62d20; font-size:28px;'>**not free**</span>
+* <span style='font-size:22px;'>javascript</span>
+* <span style='font-size:22px;'>very different from ggplot2</span>
 ]
---
-exclude: false
-
-```
-> library(highcharter)
-Highcharts (www.highcharts.com) is a Highsoft software product which is
-not free for commercial and Governmental use
-```
-
-???
-they did not pay me haha
-* free for casual use
-* need to pay to use in production
-* minimalistic, stylish
-* smooth animation
-* vast choice of vis types
-* I just like how it looks
+</div>
 
 ---
 name: gg-philosophy-1
+exclude: false
+
+# ggplot2 philosophy
+
+<img src="pics/ggplot2_phil_2.png" height = 500>
+
+---
+name: gg-philosophy-2
 exclude: false
 
 # ggplot2 philosophy
@@ -201,29 +202,8 @@ exclude: false
 library(dplyr)
 library(ggplot2)
 df <- iris %>% 
-  select(s_length = Sepal.Length, s_width = Sepal.Width, species = Species) #%>% 
-  #slice(c(1:5, 51:55))
+  select(s_length = Sepal.Length, s_width = Sepal.Width, species = Species)
 ```
-
-<img src="pics/ggplot2_phil_1.png" height = 500>
-
-???
-we work with dataframes only
-rows are observations
-columns are feautes
----
-name: gg-philosophy-2
-exclude: false
-
-# ggplot2 philosophy
-
-<img src="pics/ggplot2_phil_2.png" height = 500>
-
----
-name: gg-philosophy-3
-exclude: false
-
-# ggplot2 philosophy
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(out.extra = 'style="position: absolute; bottom: 3%;"')
@@ -234,7 +214,7 @@ ggplot(df, aes(x = s_length, y = s_width, color = species))
 ```
 
 ---
-name: gg-philosophy-4
+name: gg-philosophy-3
 exclude: false
 
 # ggplot2 philosophy
@@ -246,7 +226,7 @@ ggplot(df, aes(x = s_length, y = s_width, color = species)) +
 ```
 
 ---
-name: gg-philosophy-5
+name: gg-philosophy-4
 exclude: false
 
 # ggplot2 philosophy
@@ -268,8 +248,6 @@ exclude: false
 # Highcharts philosophy
 
 ### Dataframes?
---
-exclude: false
 
 ### No, lists!
 
@@ -632,7 +610,7 @@ zoomable - emphasize
 name: waterfall
 exclude: false
 
-# Hidden Data
+# Waterfall Plot
 
 ```{r echo=FALSE}
 hc_wat(sp_df)
@@ -674,17 +652,13 @@ exclude: false
 
 # Summary
 
-* costs money for production use
-* high quality graphics
+<div style='font-size:28px; line-height: 50px;'>
+* probably the best looking
+* not free for production use
 * different from ggplot2
-* purrr package will be useful
-* check out [jkunst.com/highcharter](http://jkunst.com/highcharter/)
-* documentation is great
 
 
-???
-high quality graphics: animation also
-abt including: I just wrote the code and it appeared
+Find the slides at: [idmn.me](https://idmn.me)
 
 ---
 name: questions
@@ -695,4 +669,3 @@ name: questions
 name: doing
 
 <h1><span style='color:#3d94d1; position: fixed; top: 40%; left: 15%'>Doing now what patients need next </span></h1>
-

@@ -669,4 +669,3 @@ name: questions
 name: doing
 
 <h1><span style='color:#3d94d1; position: fixed; top: 40%; left: 15%'>Doing now what patients need next </span></h1>
-
