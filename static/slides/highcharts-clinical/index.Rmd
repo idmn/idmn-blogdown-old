@@ -12,6 +12,7 @@ output:
 
 ---
 name: title
+class: title-slide
 
 ```{r include=FALSE}
 library(forcats)
@@ -20,9 +21,6 @@ library(stringr)
 library(glue)
 ```
 
-
-name: title
-class: title-slide
 background-image: url(pics/templ_title.png)
 background-position: 50% 100%
 background-size: 100% 35%
@@ -60,11 +58,17 @@ exclude: false
 # Agenda
 
 <div style='font-size:28px; line-height: 50px;'>
-1. Interactive visualization in R: options
+1. Interactive visualization in R: overview
 2. Highcharts principles
 3. Clinical graphs with Highcharts
 4. Helpful resources
 <div/>
+
+---
+name: clinical-graphs
+class: center, middle
+
+#Interactive Visualization in R
 
 ---
 name: gg-shiny
@@ -179,10 +183,15 @@ library(highcharter)
 <div style='line-height: 40px;'>
 * <span style='color:#3d94d1; font-size:28px;'>**looks awesome!**</span>
 * <span style='color:#d62d20; font-size:28px;'>**not free**</span>
-* <span style='font-size:22px;'>javascript</span>
-* <span style='font-size:22px;'>very different from ggplot2</span>
+* <span style='font-size:22px;'>JavaScript</span>
 ]
 </div>
+
+---
+name: clinical-graphs
+class: center, middle
+
+#Highcharts vs Ggplot2
 
 ---
 name: gg-philosophy-1
@@ -493,9 +502,11 @@ hchart(df, "line", hcaes(x = x, y = y, group = arm)) %>%
   hc_size(height = 450)
 ```
 
-???
-but to be honest it is quite limited
-due to huge difference in philosophies
+---
+name: clinical-graphs
+class: center, middle
+
+#Clinical Graphs
 
 ---
 name: surv-1
@@ -616,11 +627,18 @@ exclude: false
 hc_wat(sp_df)
 ```
 
+
+---
+name: help
+class: center, middle
+
+#Where to Get Help
+
 ---
 name: highcharter-lp
 exclude: false
 
-# Help: jkunst.com/highcharter
+# jkunst.com/highcharter
 
 <img src="pics/highcharter-lp.png" style = "height: 100%; width: 100%;">
 
@@ -629,7 +647,7 @@ exclude: false
 name: help-purrr
 exclude: false
 
-# Help: purrr package
+# purrr package
 
 <img src="pics/purrr_cs_2.png" style = "height: 85%; width: 85%;">
 
@@ -638,7 +656,7 @@ name: help-doc
 exclude: false
 
 
-# Help: documentation + jsfiddle/codepen
+# documentation + jsfiddle/codepen
 
 <img src="pics/jsfiddle.gif" style = "height: 100%; width: 100%;">
 
