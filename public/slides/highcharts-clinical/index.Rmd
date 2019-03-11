@@ -502,7 +502,7 @@ class: center, middle
 name: surv-1
 exclude: false
 
-# Survival
+# Survival Curve
 
 ```{r survival, eval=TRUE}
 library(survival)
@@ -658,12 +658,12 @@ name: summary
 exclude: false
 
 
-# Summary
+# Try it Out!
 
-<div style='font-size:28px; line-height: 50px;'>
-* probably the best looking
-* not free for production use
-* different from ggplot2
+
+```{r eval=FALSE}
+install.packages("highcharter")
+```
 
 Find the slides at: [idmn.me](https://idmn.me)
 
