@@ -282,10 +282,10 @@ historically - HC initially built for timeseries data
 nested lists is very natural thing for js as far as i can judge (at least more than for R)
 
 ---
-name: simple
+name: optional
 exclude: false
 
-# Simple Example
+# Options are Optional
 ```{r include=FALSE}
 library(highcharter)
 ```
@@ -297,8 +297,8 @@ highchart(
     series = list(
       list(name = "A",          #<<
            data = c(2, 3, 1)),  #<<
-      list(name = "B",
-           data = c(5, 0, 2))
+      list(name = "B",          #<<
+           data = c(5, 0, 2))   #<<
       )
   )
 )
@@ -320,16 +320,6 @@ highchart(
   hc_size(height = 400)
 ```
 ]
-
-???
-* 1-class citizen - series defined as lists
-* must contain data attribute and others
-* want to display multiple series - create list of list defining series
-* list containing all the series - is actually one of the attributes in the list of plot options
-
-* looks minimalistic and stylish
-* but already provides you with some options such as tooltips, click on label element to hide corresponding records
-* menu where you can save this plot
 
 ---
 name: more-lists-1
@@ -674,7 +664,6 @@ exclude: false
 * probably the best looking
 * not free for production use
 * different from ggplot2
-
 
 Find the slides at: [idmn.me](https://idmn.me)
 
