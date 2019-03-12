@@ -101,7 +101,7 @@ exclude: false
 ---
 
 name: fortunately
-exclude: false
+exclude: true
 
 # Interfaces
 
@@ -134,7 +134,7 @@ name: alter
 exclude: false
 name: plotly + bokeh
 
-# Popular libraries ported to R
+# Popular libraries available in R
 
 .pull-left[
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Plotly-logo-01-square.png/220px-Plotly-logo-01-square.png" height = 200>
