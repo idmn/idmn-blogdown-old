@@ -660,12 +660,16 @@ exclude: false
 
 # Try it Out!
 
-
-```{r eval=FALSE}
+```{r eval=FALSE, size="huge"}
 install.packages("highcharter")
 ```
 
-Find the slides at: [idmn.me](https://idmn.me)
+<br/>
+<br/>
+
+<div style="font-size: 150%;">
+Find the slides at: <a href="https://idmn.me">idmn.me</a>
+</div>
 
 ---
 name: questions
