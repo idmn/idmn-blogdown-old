@@ -1,0 +1,102 @@
+### Original task
+
+Create a function that:
+
+1. Based on the input dataframe (adsl) creates a BWEIGHT to BHEIGHT scatter plot with regression curves, colored by ARM. Also make it possible to define the plot's title.
+
+2. Make it possible to split the plot by two panels for males and females with the non-splitted layout as default.
+
+
+
+```{r message=FALSE}
+library(ggplot2)
+library(dplyr)
+library(haven)
+
+adsl <- haven::read_sas("data/adsl.sas7bdat")
+```
+
+
+### Solution
+```{r}
+f <- function(adsl, title, split = FALSE) {
+    p <- ggplot(adsl, aes(BHEIGHT, BWEIGHT, color = ARM)) +
+        geom_point() +
+        geom_smooth() +
+        ggtitle(title)
+    if(split) p <- p + facet_wrap(~SEX)
+    p
+}
+```
+
+```{r warning=FALSE, message=FALSE}
+f(adsl, "Baseline Weight to Height")
+f(adsl, "Baseline Weight to Height", split = TRUE)
+```
+
+### Question
+
+Is it possible to define the variable to split by (not necessarily SEX variable) in a function's attribute?
+
+### Answer
+`facet_wrap` allows to define facets with a character vector (see `?facet_wrap`)
+```{r}
+f <- function(adsl, title, split = NULL) {
+    p <- ggplot(adsl, aes(BHEIGHT, BWEIGHT, color = ARM)) +
+        geom_point() +
+        geom_smooth() +
+        ggtitle(title)
+    if(!is.null(split)) p <- p + facet_wrap(split)
+    p
+}
+```
+```{r warning=FALSE, message=FALSE}
+f(adsl, "Baseline Weight to Height", "ITTFL")
+```
+
+### Possible Question 1
+
+What about aestetics?
+
+### Answer
+This is a bit different: when you quote a name, aestetic will be mapped to a string variable constantly equal to this name.
+```{r warning=FALSE, message=FALSE}
+ggplot(adsl, aes(BHEIGHT, BWEIGHT, color = "ARM")) +
+        geom_point() +
+        geom_smooth()
+```
+
+But fortunately there is `aes_string` to help us.
+```{r warning=FALSE, message=FALSE}
+ggplot(adsl, aes_string("BHEIGHT", "BWEIGHT", color = "ARM")) +
+        geom_point() +
+        geom_smooth()
+```
+
+But it seems like the developers will prioritise quasiquotation and `aes_string` will be deprecated in the future [ggplot2 2.2.1.9000 news](https://github.com/tidyverse/ggplot2/blob/master/NEWS.md) (see the first point).
+
+I'm not a big expert in quasiquotation, but if we wanted to write a function, it would probably look like this: 
+```{r}
+f <- function(adsl, color = NULL) {
+    color <- enquo(color)
+    ggplot(adsl, aes(BHEIGHT, BWEIGHT, color = !!color)) +
+        geom_point() +
+        geom_smooth()
+}
+```
+```{r warning=FALSE, message=FALSE}
+f(adsl, ARM)
+f(adsl, SEX)
+```
+
+To get some idea on qq: [Programming with dplyr](https://dplyr.tidyverse.org/articles/programming.html).
+
+#### **NOTE**
+To make it work, you need the latest (development) version of ggplot2.
+```{r eval=FALSE}
+## Ctrl + Shift + F10
+install.packages("devtools")
+devtools::install_github("r-lib/rlang")
+devtools::install_github("tidyverse/ggplot2")
+```
+
