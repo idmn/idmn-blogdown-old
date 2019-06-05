@@ -1,0 +1,349 @@
+data.frame
+========================================================
+author: Iaroslav Domin
+date: 
+autosize: false
+width: 1300
+height: 700
+
+<style>
+    .medium-code pre code {
+      font-size: 1.2em;
+    }
+</style>
+
+```{r include=FALSE}
+library(haven)
+library(dplyr)
+#setwd("D:/Projects/presentations/Intego/")
+options(tibble.print_max = 5)
+adsl <- read_sas("data/adsl.sas7bdat")
+avs <- read_sas("data/avs.sas7bdat")
+```
+
+
+Basics
+========================================================
+class: medium-code
+
+`data.frame` = list of vectors (or even lists) of the same length
+
+To create - base R **data.frame** function, but it's better to use **dplyr::data_frame**
+```{r}
+library(dplyr)
+df <- data_frame(
+    USUBJID = c("A-001", "A-002", "B-001", "B-002"),
+    SEX = c("M", "F", "F", "M"),
+    AGE = c(69, 54, 71, 57)
+)
+df
+```
+
+read/write
+========================================================
+
+
+**read.table** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **read.delim** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **read.csv** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+
+**write.table** &nbsp;&nbsp;&nbsp;&nbsp; **write.delim** &nbsp;&nbsp;&nbsp;&nbsp; **write.csv** &nbsp;&nbsp;&nbsp;&nbsp; ...
+
+* **readr** package with &nbsp;&nbsp;&nbsp;&nbsp;**read_csv**&nbsp;&nbsp;&nbsp;&nbsp; **read_delim** &nbsp;&nbsp;&nbsp;&nbsp;... 
+* **haven** package with &nbsp;&nbsp;&nbsp;&nbsp;**read_sas** &nbsp;&nbsp;&nbsp;&nbsp; **read_xpt**
+&nbsp;&nbsp;&nbsp;&nbsp; **read_spss** &nbsp;&nbsp;&nbsp;&nbsp; ...
+
+```{r, eval=FALSE}
+adsl <- read_sas("data/adsl.sas7bdat")
+adsl <- read.csv("data/adsl.csv", sep = ";")
+```
+
+
+First Look
+========================================================
+class: medium-code
+
+
+* View in a separate tab: **View**
+* dimensions: &nbsp;&nbsp;**dim**&nbsp;&nbsp;&nbsp;&nbsp;**nrow**&nbsp;&nbsp;&nbsp;&nbsp;**ncol**
+* variable names: &nbsp;&nbsp;**names**
+* **head** and **tail**
+* **summary**&nbsp;&nbsp;&nbsp;&nbsp;**dplyr::glimpse**
+
+
+
+
+Extract Columns
+========================================================
+left: 25%
+class: medium-code
+
+<div style="color:#4488CC;font-size:150%;margin-top:+20px">
+names
+<br/><br/>
+$...
+</div>
+
+<div style="color:#4488CC;font-size:150%;margin-top:+240px">
+[[...]]
+</div>
+
+
+***
+
+```{r}
+names(df)
+df$AGE
+```
+<br/>
+
+```{r}
+df[[2]]
+```
+
+
+Subsetting
+========================================================
+left: 30%
+class: medium-code
+
+<div style="color:#4488CC;font-size:150%;margin-top:+170px">
+[rows, cols]
+</div>
+
+
+***
+
+```{r}
+df[3:4, -2]
+df[c(T, F, T, F), c("USUBJID")]
+df[,c("USUBJID", "SEX")]
+```
+
+Exercise 1
+========================================================
+
+```{r eval=FALSE}
+library(haven)
+adsl <- read_sas("data/adsl.sas7bdat")
+View(adsl)
+```
+
+Display `SUBJID`, `SEX`, `AGE`, `BWEIGHT` and `BHEIGHT` for patients older than 75.
+
+Hints:
+* subset by logical vector
+* you need to extract one specific column for this
+
+
+dplyr 
+========================================================
+
+```{r}
+library(dplyr)
+
+adsl <- read_sas("data/adsl.sas7bdat")
+adsl %>% 
+    select(ARM, matches("FL$")) %>% 
+    group_by(ARM) %>% 
+    summarise_all(funs(100*mean(. == "Y")))
+    
+```
+
+
+
+Subset Columns:   select
+========================================================
+class: medium-code
+left: 40%
+
+* include by names
+<br/><br/><br/>
+* exclude with `-` 
+<br/><br/><br/>
+* use regular expressions
+<br/><br/><br/>
+* select ranges
+
+
+***
+
+```{r eval = FALSE}
+select(adsl, USUBJID, ARM)
+```
+<br/>
+```{r eval = FALSE}
+select(adsl, -TRT01A, -TRT01AN)
+```
+<br/>
+```{r eval = FALSE}
+select(adsl, USUBJID, matches("FL$"))
+```
+<br/>
+```{r eval = FALSE}
+select(adsl, STUDYID:SEX)
+```
+
+
+Subset Rows: filter
+========================================================
+class: medium-code
+
+```{r}
+adsl %>% 
+    select(USUBJID, SEX, BWEIGHT) %>% 
+    filter(BWEIGHT >= 70, SEX == "M")
+```
+
+Create Columns: mutate
+========================================================
+class: medium-code
+
+```{r}
+adsl %>% 
+    select(SUBJID, BWEIGHT, BHEIGHT) %>% 
+    mutate(BHIGHT_M = BHEIGHT/100, BBMI = BWEIGHT/BHIGHT_M^2)
+```
+
+Sort: arrange
+========================================================
+class: medium-code
+
+```{r}
+adsl %>% 
+    select(USUBJID, ARM, AGE) %>% 
+    arrange(ARM, desc(AGE))
+```
+
+
+Grouping: group_by
+========================================================
+class: medium-code
+
+with **summarise**
+```{r}
+adsl %>% 
+  group_by(SEX) %>% 
+  summarise(
+    MEAN_H = mean(BHEIGHT, na.rm = T),
+    MAX_H = max(BHEIGHT, na.rm = T)
+  )
+```
+***
+
+with **mutate**
+```{r}
+avs %>%
+  select(SUBJID, PARAMCD, AVAL) %>%
+  group_by(SUBJID, PARAMCD) %>%
+  mutate(MAX = max(AVAL, na.rm = T)) %>% 
+  ungroup()
+```
+
+
+Counts: count, add_count
+========================================================
+class: medium-code
+left: 50%
+
+Count subgroups 
+```{r}
+count(adsl, ARM, SEX)
+```
+Attach counts to data
+```{r eval = FALSE}
+add_count(adsl, ARM, SEX)
+```
+***
+
+Variable correspondence
+```{r}
+avs <- read_sas("data/avs.sas7bdat")
+count(avs, PARAMCD, AVALU)
+```
+
+
+
+Advanced
+========================================================
+
+**mutate_all** &nbsp;&nbsp;&nbsp;&nbsp;**mutate_at** &nbsp;&nbsp;&nbsp;&nbsp;**mutate_if** 
+
+**summarise_all**&nbsp;&nbsp;&nbsp;&nbsp; **summarise_at**&nbsp;&nbsp;&nbsp;&nbsp; **summarise_if**
+
+...
+
+
+```{r eval=FALSE}
+
+adsl %>% mutate_at(
+    funs(. == "Y"),
+    .vars = vars(matches("FL$"))
+)
+```
+
+Exercise 2
+========================================================
+class: medium-code
+
+```{r eval = FALSE}
+avs <- read_sas("data/avs.sas7bdat")
+adae <- read_sas("data/adae.sas7bdat")
+```
+
+1. avs: Select SUBJID, PARAMCD, AVAL varialbes. Create a logical variable, showing when AVAL equals to the maximum value among all the measurements of this SUBJID-PARAMCD.
+
+2. adae: For all patients calculate the highest grade of each type of event they had.
+
+3. adae: Extract the summary for "Thrombocytopenia" AEDECOD only
+
+
+Data merging: base R merge and dplyr join functions
+========================================================
+class: medium-code
+left: 30%
+
+
+Intersection
+<br/><br/>
+Full
+<br/><br/>
+All from first
+<br/><br/>
+All from second
+***
+
+
+```{r eval = FALSE}
+merge(adae, adsl, by = "USUBJID")                #base
+inner_join(adae, adsl, by = "USUBJID")           #dplyr
+```
+
+```{r eval = FALSE}
+merge(adae, adsl, by = "USUBJID", all = TRUE)    #base
+full_join(adae, adsl, by = "USUBJID")            #dplyr
+```
+
+```{r eval = FALSE}
+merge(adae, adsl, by = "USUBJID", all.x = TRUE)  #base
+left_join(adae, adsl, by = "USUBJID")            #dplyr
+```
+
+```{r eval = FALSE}
+merge(adae, adsl, by = "USUBJID", all.y = TRUE)  #base
+right_join(adae, adsl, by = "USUBJID")           #dplyr
+```
+
+semi_join, anti_join
+========================================================
+
+**semi_join**: keep all records that have matches in the second dataframe
+
+**anti_join**: drop all records that have matches in the second dataframe
+
+```{r eval = FALSE}
+adae %>% semi_join(filter(adsl, AGE >= 70), by = "USUBJID")
+```
+
+Exercise 3
+========================================================
+How many patients did not have any AEs? No vs measurements?
+

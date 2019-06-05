@@ -1,0 +1,200 @@
+Matrices
+========================================================
+author: Iaroslav Domin
+date: 
+autosize: false
+width: 1300
+height: 700
+
+<style>
+.medium-code pre code {
+  font-size: 1.2em;
+}
+</style>
+
+Create
+========================================================
+class: medium-code
+left: 35%
+
+<div style="color:#4488CC;font-size:140%;margin-top:+45px">
+matrix(data, ...)
+</div>
+
+<div style="color:#4488CC;font-size:140%;margin-top:+130px">
+nrow &nbsp;&nbsp;&nbsp;&nbsp; ncol
+</div>
+
+<div style="color:#4488CC;font-size:140%;margin-top:+130px">
+dim
+</div>
+***
+```{r}
+m <- matrix(1:6, nrow = 2); m
+c(nrow = nrow(m), ncol = ncol(m))
+dim(m)
+```
+```{r}
+matrix(letters[1:6], ncol = 3, byrow = TRUE)
+```
+
+as, is
+========================================================
+class: medium-code
+left: 35%
+
+<div style="color:#4488CC;font-size:160%;margin-top:+130px">
+as.matrix <br/><br/>
+is.matrix
+</div>
+
+***
+
+```{r}
+m <- as.matrix(1:3); m
+class(m)
+is.matrix(m)
+as.numeric(m)
+```
+
+
+Bind
+========================================================
+class: medium-code
+left: 35%
+
+<div style="color:#4488CC;font-size:160%;margin-top:+130px">
+rbind <br/><br/>
+cbind
+</div>
+
+***
+
+```{r}
+m <- matrix(1:4, nrow = 2)
+```
+
+
+```{r}
+cbind(m, m)
+```
+```{r}
+rbind(1:3, 3:1)
+```
+
+```{r}
+cbind(m, 13)
+```
+
+Subset
+========================================================
+class: medium-code
+left: 35%
+
+<div style="color:#4488CC;font-size:200%;margin-top:+130px">
+[&nbsp;&nbsp;, &nbsp;&nbsp;]
+</div>
+
+
+***
+
+```{r}
+m <- matrix(1:6, nrow = 2); m
+m[1,]
+m[1, 3]
+m[, c(F, T, T)]
+```
+
+
+Dimnames and Subset by Dimnames
+========================================================
+class: medium-code
+left: 35%
+
+<div style="color:#4488CC;font-size:160%;margin-top:+130px">
+rownames <br/><br/>
+colnames <br/><br/>
+dimnames  <br/><br/>
+</div>
+
+***
+```{r}
+rownames(m) <- c("SUBJ1", "SUBJ2")
+colnames(m) <- c("DAY1", "DAY2", "DAY3")
+m
+dimnames(m)
+m["SUBJ1", c("DAY1", "DAY3")]
+```
+
+Assign to Subset
+========================================================
+class: medium-code
+left: 35%
+
+<div style="color:#4488CC;font-size:200%;margin-top:+130px">
+[&nbsp;&nbsp;, &nbsp;&nbsp;]&nbsp;&nbsp; <-
+</div>
+
+***
+```{r}
+m[m <= 3] <- 0; m
+m[, "DAY1"] <- m[, "DAY2"] + m[, "DAY3"]; m
+m[1, 2] <- 99; m
+```
+
+
+Arithmetics
+========================================================
+class: medium-code
+
+```{r}
+m <- matrix(1:4, 2); m
+m - 1
+m + c(1, 100)
+```
+
+
+***
+```{r}
+log(m)
+```
+
+```{r}
+m * m # (!) element-wise
+```
+
+Inverse Matrix and Matrix Multiplication
+========================================================
+class: medium-code
+left: 35%
+
+<div style="color:#4488CC;font-size:180%;margin-top:+130px">
+solve <br/><br/><br/>
+%*% 
+</div>
+
+***
+
+```{r}
+m_inv <- solve(m); m_inv
+m %*% m_inv
+s <- solve(m, c(1, 100)); s
+m %*% s
+```
+
+Transpose
+========================================================
+class: medium-code
+left: 35%
+
+<div style="color:#4488CC;font-size:300%;margin-top:+130px">
+t
+</div>
+
+***
+```{r}
+m <- matrix(1:6, nrow = 2); m
+t(m)
+t(1:3)
+```
+

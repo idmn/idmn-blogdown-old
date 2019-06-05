@@ -1,0 +1,442 @@
+Strings in R
+========================================================
+author: Iaroslav Domin
+date: 
+autosize: false
+width: 1300
+height: 700
+
+<style>
+.medium-code pre code {
+  font-size: 1.2em;
+}
+
+.red { background-color: red; }
+div.blue pre { background-color:lightblue; }
+div.blue pre.r { background-color:blue; }
+
+.exampleone pre code {
+  background-color: teal;
+  color: white;
+}
+</style>
+
+```{r include=FALSE}
+library(glue)
+```
+
+
+Rewind
+========================================================
+left: 35%
+class: medium-code
+
+<div style="color:#4488CC;font-size:250%;margin-top:+200px">
+paste(...)
+</div>
+
+***
+
+```{r}
+paste("first", "second")
+paste("n", 1:5, sep = ":")
+paste0("without", "space")
+paste(1:10, collapse = "...")
+```
+
+
+
+More functions
+========================================================
+left: 35%
+class: medium-code
+
+
+<div style="color:#4488CC;font-size:200%;margin-top:+60px">
+nchar
+</div>
+
+<div style="color:#4488CC;font-size:200%;margin-top:+120px">
+strsplit
+</div>
+
+***
+
+```{r}
+dates <- c("2017-05-09", "2017-05", "2017")
+```
+
+```{r}
+nchar(dates)
+strsplit(dates, "-")
+```
+
+
+
+stringr package
+========================================================
+Manipulations with strings
+```{r eval=FALSE}
+install.packages("stringr")
+library(stringr)
+```
+```{r include=FALSE}
+library(stringr)
+```
+
+
+Link: [Introduction](https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html)
+
+
+Getting and setting individual characters
+========================================================
+left: 35%
+
+<div style="color:#4488CC;font-size:200%;margin-top:+200px">
+str_sub
+</div>
+<br/><br/>
+
+***
+
+```{r}
+mdr <- c("MedDRA 20.1", "MedDRA 36.6")
+str_sub(mdr, 8, -1)
+
+str_sub(mdr, 8, -1) <- "18.1"
+mdr
+```
+
+
+Whitespace
+========================================================
+left: 25%
+class: medium-code
+
+<div style="color:#4488CC;font-size:200%;margin-top:+150px">
+str_pad
+<br/><br/>
+str_trim
+</div>
+<br/><br/>
+
+***
+```{r}
+str_pad(1:10, 2, pad = "0")
+paste0(str_pad(c("first", "second"), 8, side = "right"), ":")
+```
+```{r}
+str_trim("  String with trailing and leading white space\t")
+```
+
+Letter Cases
+========================================================
+left: 30%
+class: medium-code
+
+<div style="color:#4488CC;font-size:200%;margin-top:+150px">
+str_to_lower
+<br/><br/>
+str_to_upper
+<br/><br/>
+str_to_title
+</div>
+<br/><br/>
+
+***
+
+```{r}
+aes <- c("lung inflammation", "DYSPNEA")
+str_to_lower(aes)
+str_to_upper(aes)
+str_to_title(aes)
+```
+
+
+Regular Expressions
+========================================================
+```{r include=FALSE}
+str_view <- function (string, pattern, match = NA) 
+{
+    if (identical(match, TRUE)) {
+        string <- string[str_detect(string, pattern)]
+    } else if (identical(match, FALSE)) {
+        string <- string[!str_detect(string, pattern)]
+    }
+    loc <- str_locate(string, pattern)
+    has_match <- !is.na(loc[, "start"])
+    str_sub(string[has_match], loc[has_match, , drop = FALSE]) <- paste0("<font color='red'>", 
+                                                                         str_sub(string[has_match], loc[has_match, , drop = FALSE]), 
+                                                                         "</font>")
+    cat(c("<pre><code>", string, "</pre></code>"))
+
+}
+
+str_view_all <- function (string, pattern, match = NA) 
+{
+    if (identical(match, TRUE)) {
+        string <- string[str_detect(string, pattern)]
+    } else if (identical(match, FALSE)) {
+        string <- string[!str_detect(string, pattern)]
+    }
+    loc <- str_locate_all(string, pattern)
+    string_list <- Map(loc = loc, string = string, function(loc, 
+                                                            string) {
+        if (nrow(loc) == 0) 
+            return(string)
+        for (i in rev(seq_len(nrow(loc)))) {
+            str_sub(string, loc[i, , drop = FALSE]) <- paste0("<font color='red'>", 
+                                                              str_sub(string, loc[i, , drop = FALSE]), "</font>")
+        }
+        string
+    })
+    string <- unlist(string_list)
+    cat(c("<pre><code>", string, "</pre></code>"))
+}
+
+```
+
+**regular expression** - a special text string for describing a search pattern 
+
+Use `str_view_all` function to test patterns
+
+```{r eval=FALSE}
+str_view_all(c("banana", "apple", "mandarine"), "an")
+```
+<pre><code> b<font color='red'>an</font><font color='red'>an</font>a apple m<font color='red'>an</font>darine </pre></code>
+
+Basic Matches
+========================================================
+
+<font style="color:#4488CC;font-size:200%;margin-top:+150px">.</font> - any character
+
+```{r eval=FALSE}
+str_view_all(c("banana", "apple", "mandarine"), ".a.")
+```
+<pre><code> <font color='red'>ban</font>ana apple <font color='red'>man</font><font color='red'>dar</font>ine </pre></code>
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">\\\\\\\\.</font> - to match the dot itself
+```{r, eval=FALSE}
+str_view_all(c("Aladinostat 80.8mg", "Aladinostat 90mg"), "\\.")
+```
+<pre><code> Aladinostat 80<font color='red'>.</font>8mg &nbsp;&nbsp; Aladinostat 90mg </pre></code>
+
+
+Anchors
+========================================================
+class: medium-code
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">\^</font> - start of the string;&nbsp;&nbsp;
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">\$</font> - end of the string;
+
+```{r eval=FALSE}
+str_view_all(c("Aladinostat 80.8mg", "90mg Aladinostat"), pattern = "mg$")
+```
+<pre><code> Aladinostat 80.8<font color='red'>mg</font>&nbsp;&nbsp; 90mg Aladinostat </pre></code>
+
+```{r eval=FALSE}
+str_view_all(c("ABC-001", "DEF-002"), pattern = "^...")
+```
+<pre><code> <font color='red'>ABC</font>-001 <font color='red'>DEF</font>-002 </pre></code>
+
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">\\\\\\\\b</font> - word boundary
+```{r eval=FALSE}
+str_view_all(c("Aladinostat 80.8mg", "Aladinostat 90mg"), ".\\b")
+```
+<pre><code> Aladinosta<font color='red'>t</font><font color='red'> </font>8<font color='red'>0</font><font color='red'>.</font>8m<font color='red'>g</font> &nbsp;&nbsp;Aladinosta<font color='red'>t</font><font color='red'> </font>90m<font color='red'>g</font> </pre></code>
+
+
+Character classes and alternatives
+========================================================
+left: 30%
+class: medium-code
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">[0-9]</font>&nbsp;&nbsp;- digits
+
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">[A-Za-z]</font>&nbsp;&nbsp;- letters
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">[abc]</font>&nbsp;&nbsp;- a, b or c
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">[!abc]</font>&nbsp;&nbsp;- not a, b or c
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">abc|xyz</font>&nbsp;&nbsp;- abc or xyz
+
+***
+```{r eval=FALSE}
+str_view_all(c("Drug 80.8mg", "90mg of a drug"), "[0-9]")
+```
+<pre><code> Aladinostat <font color='red'>8</font><font color='red'>0</font>.<font color='red'>8</font>mg <font color='red'>9</font><font color='red'>0</font>mg Aladinostat </pre></code>
+
+```{r eval=FALSE}
+str_view_all(c("ABCDEF", "abcdef"), "[c-e]")
+```
+<pre><code> ABCDEF ab<font color='red'>c</font><font color='red'>d</font><font color='red'>e</font>f </pre></code>
+
+
+```{r eval=FALSE}
+str_view_all(c("gray", "grey", "green"), "gr(a|e)y")
+```
+<pre><code> <font color='red'>gray</font> <font color='red'>grey</font> green </pre></code>
+
+
+Repetition
+========================================================
+left: 30%
+class: medium-code
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">?</font>&nbsp;&nbsp;- 0 or 1
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">+</font>&nbsp;&nbsp;- 1 or more
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">*</font>&nbsp;&nbsp;- 0 or more
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">{n}</font>&nbsp;&nbsp;- n times
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">{n, }</font>&nbsp;&nbsp;- n or more
+
+<font style="color:#4488CC;font-size:150%;margin-top:+150px">{n, m}</font>&nbsp;&nbsp;- from n to m
+
+
+***
+
+```{r eval=FALSE}
+str_view_all(c("Drug 80.1mg", "Drug 80mg", "Drug 80"), "[0-9]+mg")
+```
+<pre><code> Drug 80.<font color='red'>1mg</font> &nbsp;&nbsp;Drug <font color='red'>80mg</font> &nbsp;&nbsp;Drug 80</pre></code>
+
+```{r eval=FALSE}
+str_view_all(c("Drug 80.1mg", "Drug 80mg", "Drug 80"), "[0-9]+(\\.[0-9]+)?(mg)?")
+```
+<pre><code> Drug <font color='red'>80.1mg</font> &nbsp;&nbsp;Drug <font color='red'>80mg</font> &nbsp;&nbsp;Drug <font color='red'>80</font> </pre></code>
+
+```{r eval=FALSE}
+str_view_all(c("Drug 80.1mg", "Other Drug 14ml"), "[0-9]+(\\.[0-9]+)?.*")
+```
+<pre><code> Drug <font color='red'>80.1mg</font>&nbsp;&nbsp; Other Drug <font color='red'>14ml</font> </pre></code>
+
+```{r eval=FALSE}
+str_view_all(c("Drug 80.1mg", "Drug 100mg"), "[0-9]{3,}")
+```
+<pre><code> Drug 80.1mg &nbsp;&nbsp;Drug <font color='red'>100</font>mg </pre></code>
+
+
+Detect, Extract, Subset, Replace
+========================================================
+left: 30%
+class: medium-code
+
+<font style="color:#4488CC;font-size:150%;margin-top:+300px">str_detect</font>
+
+<font style="color:#4488CC;font-size:150%;margin-top:+300px">str_extract</font>
+
+<font style="color:#4488CC;font-size:150%;margin-top:+300px">str_subset</font>
+
+<font style="color:#4488CC;font-size:150%;margin-top:+300px">str_replace</font>
+
+***
+
+```{r}
+s <- c("Drug 80.1mg", "Drug 80mg", "Drug   80")
+pattern <- "[0-9]+(\\.[0-9]+)?mg"
+```
+```{r}
+str_detect(s, pattern)
+str_extract(s, pattern)
+str_subset(s, pattern)
+str_replace(s, "[ ]+", " ")
+```
+
+
+You can use pipes!
+========================================================
+left: 25%
+class: medium-code
+
+<div style="color:#4488CC;font-size:300%;margin-top:+200px">
+%>% 
+</div>
+
+
+<div style="color:#7e7e7e;font-size:80%;margin-top:+100px">
+Shortcut: Ctrl+Shift+M
+</div>
+
+***
+
+
+```{r}
+x <- c("Drug   34.5 MG  ", "  aspirin  48.8mg")
+x %>% 
+    str_trim() %>% 
+    str_replace("[ ]+", " ") %>% 
+    str_replace(regex("[ ]+mg", ignore_case = TRUE), "mg") %>% 
+    str_to_title()
+```
+
+
+<div style="margin-top:+100px">
+Exercise
+</div>
+
+<div style="font-size:76%">
+Explain what happens at each step. Change the code so that the dose would be displayed as "mg", not "Mg".
+<div/>
+
+Exercise
+========================================================
+```{r eval=FALSE}
+dates <- c("28th of June, 2008", "1st January - 1993", "2011, April, 19")
+```
+Extract: 
+* days
+* month names
+* years
+
+Hint: Try `\\b`. You may also want to combine multiple `str_extract`s.
+
+glue package
+========================================================
+class: medium-code
+
+Preserves line breaks
+```{r}
+glue("Some text
+     Some more text on the new line")
+```
+
+But you can turn it off
+```{r}
+glue("Long description of an adverse event \\
+      that you don`t want to keep in one line \\
+      of code")
+```
+
+
+
+
+glue package
+========================================================
+class: medium-code
+
+```{r eval=FALSE}
+install.packages("glue")
+library(glue)
+```
+
+```{r}
+snapshot <- "a12345b"
+program <- "g_scat"
+filter <- "SE"
+glue("Snapshot: {snapshot}, file: {program}_{filter}.pdf, {Sys.time()}")
+```
+
+### Exercise 1
+There are 20 patients with SUBJIDs `102, 104, ..., 140`.
+First 10 are treated in the site (SITEID) `"A"`, next 7 in cite `"B"`, and last 3 - in `"C"`. The STUDYID is "BO12345".
+
+Create a vector of USUBJIDs in the format STUDYID-SITEID-SUBJID.
+
+
+
