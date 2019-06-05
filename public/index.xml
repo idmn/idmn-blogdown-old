@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Iaroslav Domin</title>
-    <link>https://idmn.netlify.com/</link>
+    <link>/</link>
     <description>Recent content on Iaroslav Domin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-        <atom:link href="https://idmn.netlify.com/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>about</title>
-      <link>https://idmn.netlify.com/about/</link>
+      <link>/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://idmn.netlify.com/about/</guid>
+      <guid>/about/</guid>
       <description>&lt;p&gt;Iaroslav Domin, statistical programmer at &lt;a href=&#34;https://intego-group.com/&#34;&gt;Intego Group&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;This blog is built with &lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown&lt;/a&gt; and &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt;, and deployed using &lt;a href=&#34;https://www.netlify.com/&#34;&gt;Netlify&lt;/a&gt;.&lt;/p&gt;
@@ -24,40 +24,40 @@
     
     <item>
       <title>slides</title>
-      <link>https://idmn.netlify.com/slides/</link>
+      <link>/slides/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://idmn.netlify.com/slides/</guid>
+      <guid>/slides/</guid>
       <description>
 
 &lt;h2 id=&#34;talks&#34;&gt;Talks&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://idmn.netlify.com/slides/highcharts-clinical&#34;&gt;Highcharts for Clinical Graphs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;/slides/highcharts-clinical&#34;&gt;Highcharts for Clinical Graphs&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&#34;trainings&#34;&gt;Trainings&lt;/h2&gt;
 
 &lt;h3 id=&#34;r-for-clinical-trials&#34;&gt;R for Clinical Trials&lt;/h3&gt;
 
-&lt;p&gt;Data used in exercises: &lt;a href=&#34;https://idmn.netlify.com/slides/r-clinical/data/data.zip&#34;&gt;download (zip)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Data used in exercises: &lt;a href=&#34;/slides/r-clinical/data/data.zip&#34;&gt;download (zip)&lt;/a&gt;&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://idmn.netlify.com/slides/r-clinical/01_Basics.html&#34;&gt;Basics&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;/slides/r-clinical/01_Basics.html&#34;&gt;Basics&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://idmn.netlify.com/slides/r-clinical/01a_Matrices.html&#34;&gt;Matrices&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;/slides/r-clinical/01a_Matrices.html&#34;&gt;Matrices&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://idmn.netlify.com/slides/r-clinical/01b_Probability_Distributions.html&#34;&gt;Probability Distributions&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;/slides/r-clinical/01b_Probability_Distributions.html&#34;&gt;Probability Distributions&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://idmn.netlify.com/slides/r-clinical/02_Strings.html&#34;&gt;Strings&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;/slides/r-clinical/02_Strings.html&#34;&gt;Strings&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://idmn.netlify.com/slides/r-clinical/03_Dates.html&#34;&gt;Dates&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;/slides/r-clinical/03_Dates.html&#34;&gt;Dates&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://idmn.netlify.com/slides/r-clinical/04_data.frame.html&#34;&gt;data.frame&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;/slides/r-clinical/04_data.frame.html&#34;&gt;data.frame&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://idmn.netlify.com/slides/r-clinical/05_ggplot2.html&#34;&gt;ggplot2&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;/slides/r-clinical/05_ggplot2.html&#34;&gt;ggplot2&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://idmn.netlify.com/slides/r-clinical/06_Functions_and_Loops.html&#34;&gt;Functions and Loops&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;/slides/r-clinical/06_Functions_and_Loops.html&#34;&gt;Functions and Loops&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
